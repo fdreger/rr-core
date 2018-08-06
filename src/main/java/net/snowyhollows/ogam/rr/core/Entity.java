@@ -1,10 +1,12 @@
 package net.snowyhollows.ogam.rr.core;
 
-import java.util.List;
-import java.util.Optional;
+import net.snowyhollows.ogam.rr.feature.ascii.component.AsciiRepresentation;
+import net.snowyhollows.ogam.rr.feature.space.manipulator.PotentialObstacle;
+import net.snowyhollows.ogam.rr.feature.space.manipulator.impl.MovementImpl;
 
-public interface Entity {
-    List<Action> enumeratePossibleActions();
+public class Entity {
+	public AsciiRepresentation asciiRepresentation;
+	public PotentialObstacle obstacle;
 
-    <T extends Manipulator> Optional<T> manipulate(Class<T> manipulatorClass);
+	public MovementImpl movement;
 }

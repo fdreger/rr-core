@@ -1,6 +1,4 @@
-package net.snowyhollows.ogam.rr.feature.ascii.manipulator.impl;
-
-import net.snowyhollows.ogam.rr.feature.ascii.manipulator.AsciiRepresentation;
+package net.snowyhollows.ogam.rr.feature.ascii.component;
 
 public class AsciiRepresentationImpl implements AsciiRepresentation {
     private final AsciiRepresentation.Color color;

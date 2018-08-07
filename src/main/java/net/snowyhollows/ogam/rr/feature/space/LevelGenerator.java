@@ -1,21 +1,12 @@
-/*
- * Copyright (c) 2009-2018 Ericsson AB, Sweden. All rights reserved.
- *
- * The Copyright to the computer program(s) herein is the property of Ericsson AB, Sweden.
- * The program(s) may be used  and/or copied with the written permission from Ericsson AB
- * or in accordance with the terms and conditions stipulated in the agreement/contract under
- * which the program(s) have been supplied.
- *
- */
 package net.snowyhollows.ogam.rr.feature.space;
 
+import net.bajobongo.beach.engine.Engine;
 import net.snowyhollows.bento2.Bento;
 import net.snowyhollows.bento2.annotation.ByFactory;
 import net.snowyhollows.bento2.annotation.WithFactory;
 import net.snowyhollows.ogam.rr.BentoInstance;
+import net.snowyhollows.ogam.rr.EngineFactory;
 import net.snowyhollows.ogam.rr.core.Entity;
-import net.snowyhollows.ogam.rr.feature.ascii.component.AsciiRepresentation;
-import net.snowyhollows.ogam.rr.feature.ascii.component.AsciiRepresentationImpl;
 import net.snowyhollows.ogam.rr.feature.space.util.MapOfLevel;
 
 /**
@@ -27,18 +18,24 @@ public class LevelGenerator {
 	private Space space;
 	Entity wall;
 	Entity nothing;
+	private Engine<Entity> engine;
 
 	@WithFactory
-	public LevelGenerator(@ByFactory(BentoInstance.class) Bento bento, Space space) {
+	public LevelGenerator(@ByFactory(BentoInstance.class) Bento bento,
+			Space space,
+			@ByFactory(EngineFactory.class) Engine engine) {
 		this.bento = bento;
 		this.space = space;
 		wall = bento.get("entity.wall");
 		nothing = bento.get("entity.nothing");
+		this.engine = engine;
+		engine.addEntity(wall);
+		engine.addEntity(nothing);
 	}
 
 	public void generate() {
-		AsciiRepresentation reprNothing = new AsciiRepresentationImpl(AsciiRepresentation.Color.WHITE, ' ');
 		Entity hero = bento.get("entity.character");
+		engine.addEntity(hero);
 		hero.movement.setPosition(new Coords(1, 4));
 
 
@@ -52,10 +49,10 @@ public class LevelGenerator {
 		mol.addRow("#####     ############ ######      ####");
 		mol.addRow("#####     ############ ###### #### ####");
 		mol.addRow("#####     ############ ###### #### ####");
-		mol.addRow("##########  ########## ######      ####");
+		mol.addRow("#########   ########## ######      ####");
 		mol.addRow("##########   #  ###### ########### ####");
-		mol.addRow("##########    ######## ########### ####");
-		mol.addRow("########               ########### ####");
+		mol.addRow("##########    ########        #### ####");
+		mol.addRow("########               ###### #### ####");
 		mol.addRow("##########         #####           ####");
 		mol.addRow("#######################################");
 

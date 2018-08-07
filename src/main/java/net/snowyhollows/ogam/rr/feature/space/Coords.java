@@ -13,7 +13,7 @@ public class Coords {
     }
 
     public Coords add(Coords other) {
-        return new Coords(row + other.row, other.col);
+        return new Coords(row + other.row, col + other.col);
     }
 
     @Override

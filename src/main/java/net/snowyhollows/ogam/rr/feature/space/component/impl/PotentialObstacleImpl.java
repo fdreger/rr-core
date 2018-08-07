@@ -1,7 +1,7 @@
-package net.snowyhollows.ogam.rr.feature.space.manipulator.impl;
+package net.snowyhollows.ogam.rr.feature.space.component.impl;
 
 import net.snowyhollows.ogam.rr.core.Entity;
-import net.snowyhollows.ogam.rr.feature.space.manipulator.PotentialObstacle;
+import net.snowyhollows.ogam.rr.feature.space.component.PotentialObstacle;
 
 public class PotentialObstacleImpl implements PotentialObstacle {
     public final boolean isObstacle;
@@ -12,6 +12,6 @@ public class PotentialObstacleImpl implements PotentialObstacle {
 
     @Override
     public boolean isObstacleFor(Entity other) {
-        return false;
+        return isObstacle;
     }
 }

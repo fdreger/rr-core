@@ -1,33 +1,22 @@
 package net.snowyhollows.ogam.rr;
 
 import java.io.IOException;
-import java.nio.charset.Charset;
-import java.util.EnumMap;
-import java.util.Optional;
 
 import com.googlecode.lanterna.TextCharacter;
 import com.googlecode.lanterna.TextColor;
-import com.googlecode.lanterna.input.KeyStroke;
 import com.googlecode.lanterna.screen.Screen;
-import com.googlecode.lanterna.screen.TerminalScreen;
-import com.googlecode.lanterna.terminal.DefaultTerminalFactory;
-import com.googlecode.lanterna.terminal.Terminal;
 import net.bajobongo.beach.engine.Engine;
 import net.snowyhollows.bento2.Bento;
 import net.snowyhollows.bento2.annotation.ByFactory;
-import net.snowyhollows.bento2.annotation.ByName;
 import net.snowyhollows.bento2.annotation.WithFactory;
 import net.snowyhollows.ogam.rr.core.Entity;
+import net.snowyhollows.ogam.rr.core.Mappers;
 import net.snowyhollows.ogam.rr.factory.AllFactoryConfigs;
-import net.snowyhollows.ogam.rr.feature.ascii.component.AsciiRepresentation;
-import net.snowyhollows.ogam.rr.feature.ascii.component.AsciiRepresentationImpl;
 import net.snowyhollows.ogam.rr.feature.space.Coords;
+import net.snowyhollows.ogam.rr.feature.space.Direction;
 import net.snowyhollows.ogam.rr.feature.space.LevelGenerator;
 import net.snowyhollows.ogam.rr.feature.space.Space;
-import net.snowyhollows.ogam.rr.feature.space.manipulator.PotentialObstacle;
-import net.snowyhollows.ogam.rr.feature.space.manipulator.impl.MovementImpl;
-import net.snowyhollows.ogam.rr.feature.space.manipulator.impl.PotentialObstacleImpl;
-import net.snowyhollows.ogam.rr.feature.space.util.MapOfLevel;
+import net.snowyhollows.ogam.rr.feature.space.component.Movement;
 
 public class Main {
 
@@ -45,7 +34,9 @@ public class Main {
 		    @ByFactory(BentoInstance.class) Bento bento,
 		    Space space,
 		    @ByFactory(ScreenFactory.class) Screen screen,
-            LevelGenerator levelGenerator){
+            LevelGenerator levelGenerator,
+		    @ByFactory(EngineFactory.class) Engine eng){
+		Engine<Entity> engine = eng;
 
 
 		levelGenerator.generate();
@@ -76,10 +67,23 @@ public class Main {
 		        }
 
 		        screen.refresh();
+
 		        PlayerCommand command = Util.commandFromKeyStroke(screen.readInput());
 		        if (command == PlayerCommand.QUIT) {
-		        	break main_loop;
+			        break main_loop;
 		        }
+
+		        engine.forEach(Mappers.player, e -> {
+
+		        	Movement movement = engine.currentEntity().movement;
+			        switch (command) {
+				        case UP: movement.move(Direction.N); break;
+				        case DOWN: movement.move(Direction.S); break;
+				        case LEFT: movement.move(Direction.W); break;
+				        case RIGHT: movement.move(Direction.E); break;
+			        }
+		        });
+
 	        }
 
 

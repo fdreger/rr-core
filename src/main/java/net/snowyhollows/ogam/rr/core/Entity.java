@@ -14,6 +14,5 @@ public class Entity {
 	public Movement movement;
 	public Treadable treadable;
 	public Bumpable bumpable;
-	public PotentialObstacle potentialObstacle;
 	public Player player;
 }

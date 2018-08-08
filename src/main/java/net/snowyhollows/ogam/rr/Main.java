@@ -7,6 +7,7 @@ import com.googlecode.lanterna.TextColor;
 import com.googlecode.lanterna.screen.Screen;
 import net.bajobongo.beach.engine.Engine;
 import net.snowyhollows.bento2.Bento;
+import net.snowyhollows.bento2.BentoRunner;
 import net.snowyhollows.bento2.annotation.ByFactory;
 import net.snowyhollows.bento2.annotation.WithFactory;
 import net.snowyhollows.ogam.rr.core.Entity;
@@ -26,7 +27,7 @@ public class Main {
 	}
 
     public static void main(String[] args) throws IOException {
-	    Bento.run(MainFactory.IT);
+		BentoRunner.runWithClasspathProperties(MainFactory.IT, "/rr.properties");
     }
 
     @WithFactory
@@ -73,14 +74,16 @@ public class Main {
 			        break main_loop;
 		        }
 
-		        engine.forEach(Mappers.player, e -> {
+		        engine.forEach(Mappers.player, Mappers.movement, (e,m) -> {
+		        	if (command == null) {
+		        		return;
+					}
 
-		        	Movement movement = engine.currentEntity().movement;
 			        switch (command) {
-				        case UP: movement.move(Direction.N); break;
-				        case DOWN: movement.move(Direction.S); break;
-				        case LEFT: movement.move(Direction.W); break;
-				        case RIGHT: movement.move(Direction.E); break;
+				        case UP: m.move(Direction.N); break;
+				        case DOWN: m.move(Direction.S); break;
+				        case LEFT: m.move(Direction.W); break;
+				        case RIGHT: m.move(Direction.E); break;
 			        }
 		        });
 

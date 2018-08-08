@@ -1,6 +1,12 @@
 package net.snowyhollows.ogam.rr;
 
+import net.snowyhollows.bento2.annotation.ByName;
+import net.snowyhollows.bento2.annotation.WithFactory;
+import net.snowyhollows.ogam.rr.core.Entity;
+import net.snowyhollows.ogam.rr.feature.space.Coords;
+
 import java.util.Random;
+import java.util.function.Supplier;
 
 /**
  * @author efildre
@@ -8,6 +14,8 @@ import java.util.Random;
 public class DividerGenerator {
 
 	private static final Random random = new Random();
+	private Entity wall;
+	private Entity nothing;
 
 	public static class SquareRoom {
 		int top, bottom, left, right;
@@ -80,8 +88,48 @@ public class DividerGenerator {
 
 	}
 
+	private SquareRoom baseRoom;
 
+	@WithFactory
+	public DividerGenerator(@ByName("level.height") int levelRows,
+							@ByName("level.width") int levelCols,
+							@ByName("entity.wall") Entity wall,
+							@ByName("entity.nothing") Entity nothing) {
+		this.wall = wall;
+		this.nothing = nothing;
+		this.baseRoom = new SquareRoom(0, levelRows, 0, levelCols, -1, -1);
+	}
 
+	public void render(EntityArray2D buffer, Supplier<Entity> doorSupplier) {
+		baseRoom.divideIfBigEnough();
+		render(baseRoom, buffer, doorSupplier);
+	}
 
+	private void render(DividerGenerator.SquareRoom room, EntityArray2D buffer, Supplier<Entity> doorSupplier) {
+		char ch = '#';
+		buffer.drawLine(room.top, room.left, room.top, room.right, wall);
+		buffer.drawLine(room.bottom, room.left, room.bottom, room.right, wall);
+		buffer.drawLine(room.top, room.left, room.bottom, room.left, wall);
+		buffer.drawLine(room.top, room.right, room.bottom, room.right, wall);
 
+		if (room.a != null) {
+			render(room.a, buffer, doorSupplier);
+		}
+		if (room.b != null) {
+			render(room.b, buffer, doorSupplier);
+		}
+		if (room.a != null && room.b != null) {
+			boolean horizontal = room.a.right != room.right;
+
+			if (horizontal) {
+				buffer.put(room.top + room.roomsConnectedAt,room.a.right, nothing);
+				Entity door = doorSupplier.get();
+				door.movement.setPosition(new Coords(room.top + room.roomsConnectedAt, room.a.right));
+			} else {
+				buffer.put(room.a.bottom, room.left + room.roomsConnectedAt, nothing);
+                Entity door = doorSupplier.get();
+                door.movement.setPosition(new Coords(room.a.bottom, room.left + room.roomsConnectedAt));
+			}
+		}
+	}
 }

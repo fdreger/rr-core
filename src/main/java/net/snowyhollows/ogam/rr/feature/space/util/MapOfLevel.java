@@ -25,7 +25,7 @@ public class MapOfLevel implements SomethingThatOccupiesSpace {
     }
 
     @Override
-    public Optional<Entity> presentAt(Coords coords) {
+    public Optional presentAt(Coords coords) {
         if (rows.size() > coords.row && rows.get(coords.row).length() > coords.col) {
             char target = rows.get(coords.row).charAt(coords.col);
             if (mapping.containsKey(target)) {

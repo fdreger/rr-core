@@ -1,12 +1,7 @@
 package net.snowyhollows.ogam.rr.feature.space;
 
-import net.snowyhollows.bento2.Bento;
 import net.snowyhollows.bento2.annotation.WithFactory;
-import net.snowyhollows.ogam.rr.BentoInstance;
 import net.snowyhollows.ogam.rr.core.Entity;
-import net.snowyhollows.ogam.rr.feature.ascii.component.AsciiRepresentation;
-import net.snowyhollows.ogam.rr.feature.ascii.component.AsciiRepresentationImpl;
-import net.snowyhollows.ogam.rr.feature.space.util.MapOfLevel;
 
 import java.util.ArrayList;
 import java.util.List;

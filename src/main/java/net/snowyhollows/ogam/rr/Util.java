@@ -26,9 +26,13 @@ public enum Util {;
 			case ArrowDown: return Main.PlayerCommand.DOWN;
 			case ArrowLeft: return Main.PlayerCommand.LEFT;
 			case ArrowRight: return Main.PlayerCommand.RIGHT;
+
 			default:
-				switch (keyStroke.getCharacter()) {
-					case 'q': return Main.PlayerCommand.QUIT;
+				Character character = keyStroke.getCharacter();
+				if (character != null) {
+					switch (character) {
+						case 'q': return Main.PlayerCommand.QUIT;
+					}
 				}
 		}
 		return null;

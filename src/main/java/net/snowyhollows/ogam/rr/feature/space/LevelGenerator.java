@@ -46,15 +46,27 @@ public class LevelGenerator {
 		mol.addRow("##                  ######### #### ####");
 		mol.addRow("################         #### #### ####");
 		mol.addRow("#####     ###########   ##### #### ####");
-		mol.addRow("#####     ############ ######      ####");
+		mol.addRow("#####     ############+######      ####");
 		mol.addRow("#####     ############ ###### #### ####");
-		mol.addRow("#####     ############ ###### #### ####");
+		mol.addRow("#####     ############ ######+#### ####");
 		mol.addRow("#########   ########## ######      ####");
-		mol.addRow("##########   #  ###### ########### ####");
+		mol.addRow("##########   #  ######+########### ####");
 		mol.addRow("##########    ########        #### ####");
 		mol.addRow("########               ###### #### ####");
 		mol.addRow("##########         #####           ####");
 		mol.addRow("#######################################");
+
+		mol.visitCoords((coords, ch) -> {
+			Entity e = null;
+			switch (ch) {
+				case '+': e = bento.get("entity.door");
+			}
+			if (e != null) {
+				e.movement.setPosition(coords);
+				engine.addEntity(e);
+			}
+		});
+
 
 		space.addSomethingThatOccupiesSpace(mol);
 	}

@@ -7,6 +7,7 @@ import net.snowyhollows.bento2.annotation.WithFactory;
 import net.snowyhollows.ogam.rr.BentoInstance;
 import net.snowyhollows.ogam.rr.Player;
 import net.snowyhollows.ogam.rr.core.Entity;
+import net.snowyhollows.ogam.rr.core.lore.Door;
 import net.snowyhollows.ogam.rr.feature.ascii.component.AsciiRepresentation;
 import net.snowyhollows.ogam.rr.feature.ascii.component.AsciiRepresentationImpl;
 import net.snowyhollows.ogam.rr.feature.space.Space;
@@ -35,6 +36,17 @@ public class EntityFactoryConfig {
 			e.asciiRepresentation = new AsciiRepresentationImpl(AsciiRepresentation.Color.WHITE, '#');
 			return e;
 		});
+
+		bento.register("entity.door", (BentoFactory) b -> {
+			Entity e = new Entity();
+			Door door = new Door();
+			e.obstacle = door;
+			e.bumpable = door;
+			e.asciiRepresentation = door;
+			e.movement = new MovementImpl(space, e);
+			return e;
+		});
+
 		bento.register("entity.nothing", (BentoFactory) b -> {
 			Entity e = new Entity();
 			return e;

@@ -5,8 +5,13 @@ import net.snowyhollows.ogam.rr.feature.space.Coords;
 import net.snowyhollows.ogam.rr.feature.space.SomethingThatOccupiesSpace;
 
 import java.util.*;
+import java.util.function.Consumer;
 
 public class MapOfLevel implements SomethingThatOccupiesSpace {
+
+	public interface CharVisitor {
+		void accept(Coords coords, char ch);
+	}
 
     private final List<String> rows = new ArrayList<>();
     private final Map<Character, Entity> mapping = new HashMap<>();
@@ -28,5 +33,14 @@ public class MapOfLevel implements SomethingThatOccupiesSpace {
             }
         }
         return Optional.empty();
+    }
+
+    public void visitCoords(CharVisitor consumer) {
+	    for (int row = 0; row < rows.size(); row++) {
+		    String rowString = rows.get(row);
+		    for (int col = 0; col < rowString.length(); col++) {
+		    	consumer.accept(new Coords(row, col), rowString.charAt(col));
+		    }
+	    }
     }
 }

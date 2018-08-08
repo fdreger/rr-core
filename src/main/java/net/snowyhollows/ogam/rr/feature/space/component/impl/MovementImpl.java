@@ -14,50 +14,52 @@ import net.snowyhollows.ogam.rr.feature.space.component.Movement;
 public class MovementImpl implements Movement, Serializable {
 	private final Space space;
 	private Coords position;
-    private final Entity me;
-    private final Optional<Entity> optionalThis;
+private final Entity me;
+private final Optional<Entity> optionalThis;
 
-    public MovementImpl(Space space, Entity entity) {
-        this.space = space;
-	    space.addSomethingThatOccupiesSpace(this);
-        this.me = entity;
-        optionalThis = Optional.of(this.me);
-    }
+public MovementImpl(Space space, Entity entity) {
+this.space = space;
+	space.addSomethingThatOccupiesSpace(this);
+this.me = entity;
+optionalThis = Optional.of(this.me);
+}
 
-    @Override
-    public Optional<Entity> presentAt(Coords coords) {
-        return coords.equals(position) ? optionalThis : Optional.empty();
-    }
+@Override
+public Optional<Entity> presentAt(Coords coords) {
+return coords.equals(position) ? optionalThis : Optional.empty();
+}
 
-    @Override
-    public boolean move(Direction d) {
-	    Coords newPosition = d.step(position);
+@Override
+public boolean move(Direction d) {
+	Coords newPosition = d.step(position);
 
-	    List<Entity> targetEntities = space.entitiesAt(newPosition, x -> true);
+	List<Entity> targetEntities = space.entitiesAt(newPosition, x -> true);
 
-	    targetEntities.stream().filter(Mappers.bumpable).forEach(e -> {
-	    	e.bumpable.bump(me);
-	    });
+	boolean metObstacle = targetEntities
+			.stream()
+			.filter(Mappers.obstacle)
+			.allMatch(e -> {
+				boolean obstructs = e.obstacle.isObstacleFor(me);
+				if (obstructs && e.bumpable != null) {
+					e.bumpable.bump(me);
+				}
+				return !obstructs;
+			});
 
-	    boolean movementPossible = targetEntities
-			    .stream()
-			    .filter(Mappers.obstacle)
-			    .allMatch(e -> !e.obstacle.isObstacleFor(me));
-
-		if (movementPossible) {
+		if (metObstacle) {
 			this.position = newPosition;
 			targetEntities.stream().filter(Mappers.treadable).forEach(e -> e.treadable.treadOn(me));
 		}
 
-		return movementPossible;
-    }
+		return metObstacle;
+}
 
-    @Override
-    public void setPosition(Coords coords) {
-        this.position = coords;
-	    space.entitiesAt(coords, x -> true)
-			    .stream()
-			    .filter(Mappers.treadable)
-			    .forEach(e -> e.treadable.treadOn(me));
-    }
+@Override
+public void setPosition(Coords coords) {
+this.position = coords;
+	space.entitiesAt(coords, x -> true)
+			.stream()
+			.filter(Mappers.treadable)
+			.forEach(e -> e.treadable.treadOn(me));
+}
 }

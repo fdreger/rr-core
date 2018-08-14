@@ -5,9 +5,6 @@ import net.snowyhollows.ogam.rr.feature.ascii.component.AsciiRepresentation;
 import net.snowyhollows.ogam.rr.feature.space.component.Bumpable;
 import net.snowyhollows.ogam.rr.feature.space.component.PotentialObstacle;
 
-/**
- * @author efildre
- */
 public class Door implements Bumpable, PotentialObstacle, AsciiRepresentation {
 
 	private boolean closed = true;

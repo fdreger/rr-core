@@ -6,9 +6,6 @@ import com.googlecode.lanterna.TextColor;
 import com.googlecode.lanterna.input.KeyStroke;
 import net.snowyhollows.ogam.rr.feature.ascii.component.AsciiRepresentation;
 
-/**
- * @author efildre
- */
 public enum Util {;
 
 	public static final EnumMap<AsciiRepresentation.Color, TextColor> colors = new EnumMap<AsciiRepresentation.Color, TextColor>(AsciiRepresentation.Color.class);

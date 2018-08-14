@@ -1,33 +1,28 @@
-package net.snowyhollows.ogam.rr;
-
-import net.snowyhollows.ogam.rr.core.Entity;
-import net.snowyhollows.ogam.rr.feature.ascii.component.AsciiRepresentation;
-import net.snowyhollows.ogam.rr.feature.space.Coords;
-import net.snowyhollows.ogam.rr.feature.space.SomethingThatOccupiesSpace;
+package net.snowyhollows.ogam.rr.util;
 
 import java.util.Arrays;
 import java.util.Optional;
 import java.util.function.Function;
 
-/**
- * @author efildre
- */
-public final class EntityArray2D implements SomethingThatOccupiesSpace {
+import net.snowyhollows.ogam.rr.feature.ascii.component.AsciiRepresentation;
+import net.snowyhollows.ogam.rr.feature.space.Coords;
+
+public class ObjectArray2D<T> {
 	private final int rows;
 	private final int cols;
 	private final Object[] entities;
-	private final Entity outsideEntity;
-	private final Entity nullEntity;
+	private final T outsideObject;
+	private final T nullObject;
 
-	public EntityArray2D(int rows, int cols, Entity outsideEntity, Entity nullEntity) {
+	public ObjectArray2D(int rows, int cols, T outsideObject, T nullObject) {
 		this.rows = rows;
 		this.cols = cols;
-		this.outsideEntity = outsideEntity;
-		this.nullEntity = nullEntity;
+		this.outsideObject = outsideObject;
+		this.nullObject = nullObject;
 		this.entities = new Object[rows * cols];;
 	}
 
-	public void fillWith(Entity entity) {
+	public void fillWith(T entity) {
 		Arrays.fill(entities, entity);
 	}
 
@@ -35,20 +30,20 @@ public final class EntityArray2D implements SomethingThatOccupiesSpace {
 		return (row < rows && row >= 0 && col < cols && col >= 0);
 	}
 
-	public Entity get(int row, int col) {
+	public T get(int row, int col) {
 		if (isValid(row, col)) {
-			Entity result = (Entity)entities[row * cols + col];
-			return result != null ? result : outsideEntity;
-		} else return nullEntity;
+			T result = (T)entities[row * cols + col];
+			return result != null ? result : outsideObject;
+		} else return nullObject;
 	}
 
-	public void put(int row, int col, Entity e) {
+	public void put(int row, int col, T e) {
 		if (isValid(row, col)) {
 			entities[row * cols + col] = e;
 		}
 	}
 
-	public String toString(Function<Entity, AsciiRepresentation> mapper) {
+	public String toString(Function<T, AsciiRepresentation> mapper) {
 		StringBuilder sb = new StringBuilder();
 		for (int row = 0; row < rows; row++) {
 			for (int col = 0; col < cols; col++) {
@@ -62,7 +57,7 @@ public final class EntityArray2D implements SomethingThatOccupiesSpace {
 		return sb.toString();
 	}
 
-	public void drawLine(int row1, int col1, int row2, int col2, Entity e) {
+	public void drawLine(int row1, int col1, int row2, int col2, T e) {
 		int dr = row2 - row1;
 		int dc = col2 - col1;
 		float step = 0;
@@ -87,8 +82,4 @@ public final class EntityArray2D implements SomethingThatOccupiesSpace {
 
 	}
 
-	@Override
-	public Optional presentAt(Coords coords) {
-		return Optional.ofNullable(get(coords.row, coords.col));
-	}
 }

@@ -4,13 +4,11 @@ import net.snowyhollows.bento2.annotation.ByName;
 import net.snowyhollows.bento2.annotation.WithFactory;
 import net.snowyhollows.ogam.rr.core.Entity;
 import net.snowyhollows.ogam.rr.feature.space.Coords;
+import net.snowyhollows.ogam.rr.util.ObjectArray2D;
 
 import java.util.Random;
 import java.util.function.Supplier;
 
-/**
- * @author efildre
- */
 public class DividerGenerator {
 
 	private static final Random random = new Random();
@@ -41,6 +39,7 @@ public class DividerGenerator {
 			boolean canH = width > 5 && height > 3;
 			boolean canV = height > 5 && width > 3;
 
+
 			if (canH && !canV) {
 				divideH();
 			} else if (!canH && canV) {
@@ -53,7 +52,10 @@ public class DividerGenerator {
 				}
 			}
 
-			if (a != null){
+			int whatNow = random.nextInt(5);
+			if (whatNow == 0) {
+				return;
+			} else if (a != null){
 				a.divideIfBigEnough();
 				b.divideIfBigEnough();
 			}
@@ -68,6 +70,7 @@ public class DividerGenerator {
 			if (slice == reservedCol) {
 				slice++;
 			}
+
 			roomsConnectedAt = random.nextInt(height - 3) + 2;
 			a = new SquareRoom(top, bottom, left, left + slice, roomsConnectedAt, -1);
 			b = new SquareRoom(top, bottom, left + slice, right, roomsConnectedAt, -1);
@@ -100,13 +103,12 @@ public class DividerGenerator {
 		this.baseRoom = new SquareRoom(0, levelRows, 0, levelCols, -1, -1);
 	}
 
-	public void render(EntityArray2D buffer, Supplier<Entity> doorSupplier) {
+	public void render(ObjectArray2D buffer, Supplier<Entity> doorSupplier) {
 		baseRoom.divideIfBigEnough();
 		render(baseRoom, buffer, doorSupplier);
 	}
 
-	private void render(DividerGenerator.SquareRoom room, EntityArray2D buffer, Supplier<Entity> doorSupplier) {
-		char ch = '#';
+	private void render(DividerGenerator.SquareRoom room, ObjectArray2D buffer, Supplier<Entity> doorSupplier) {
 		buffer.drawLine(room.top, room.left, room.top, room.right, wall);
 		buffer.drawLine(room.bottom, room.left, room.bottom, room.right, wall);
 		buffer.drawLine(room.top, room.left, room.bottom, room.left, wall);
@@ -124,11 +126,11 @@ public class DividerGenerator {
 			if (horizontal) {
 				buffer.put(room.top + room.roomsConnectedAt,room.a.right, nothing);
 				Entity door = doorSupplier.get();
-				door.movement.setPosition(new Coords(room.top + room.roomsConnectedAt, room.a.right));
+				door.position.setCoords(new Coords(room.top + room.roomsConnectedAt, room.a.right));
 			} else {
 				buffer.put(room.a.bottom, room.left + room.roomsConnectedAt, nothing);
                 Entity door = doorSupplier.get();
-                door.movement.setPosition(new Coords(room.a.bottom, room.left + room.roomsConnectedAt));
+                door.position.setCoords(new Coords(room.a.bottom, room.left + room.roomsConnectedAt));
 			}
 		}
 	}

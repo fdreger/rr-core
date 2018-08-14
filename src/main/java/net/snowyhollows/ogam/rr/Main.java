@@ -1,12 +1,12 @@
 package net.snowyhollows.ogam.rr;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.googlecode.lanterna.TextCharacter;
 import com.googlecode.lanterna.TextColor;
 import com.googlecode.lanterna.screen.Screen;
-import net.bajobongo.beach.engine.Engine;
-import net.snowyhollows.bento2.Bento;
 import net.snowyhollows.bento2.BentoRunner;
 import net.snowyhollows.bento2.annotation.ByFactory;
 import net.snowyhollows.bento2.annotation.WithFactory;
@@ -16,8 +16,6 @@ import net.snowyhollows.ogam.rr.factory.AllFactoryConfigs;
 import net.snowyhollows.ogam.rr.feature.space.Coords;
 import net.snowyhollows.ogam.rr.feature.space.Direction;
 import net.snowyhollows.ogam.rr.feature.space.LevelGenerator;
-import net.snowyhollows.ogam.rr.feature.space.Space;
-import net.snowyhollows.ogam.rr.feature.space.component.Movement;
 
 public class Main {
 
@@ -32,39 +30,45 @@ public class Main {
 
     @WithFactory
     public Main(AllFactoryConfigs allFactoryConfigs,
-		    @ByFactory(BentoInstance.class) Bento bento,
-		    Space space,
 		    @ByFactory(ScreenFactory.class) Screen screen,
             LevelGenerator levelGenerator,
-		    @ByFactory(EngineFactory.class) Engine eng){
-		Engine<Entity> engine = eng;
-
+		    EntityEngine engine) {
 
 		levelGenerator.generate();
+	    List<Entity> displayList = new ArrayList<>();
 
 		try {
-
 			screen.startScreen();
 
 			main_loop:
 	        while (true) {
 		        screen.clear();
-		        for (int row = 0; row < 15; row++) {
-			        for (int col = 0; col < 40; col++) {
-				        Coords coords = new Coords(row, col);
-				        TextCharacter tc = space
-						        .entitiesAt(coords, x -> true).stream()
-						        .findFirst()
-						        .map(e -> e.asciiRepresentation)
-						        .map(ascii -> new TextCharacter(
-								        ascii.getChar(),
-								        Util.colors.get(ascii.getColor()),
-								        TextColor.ANSI.BLACK))
-						        .orElse(null);
-				        if (tc != null) {
-					        screen.setCharacter(col, row, tc);
-				        }
+		        displayList.clear();
+
+		        int fromRow = 0;
+		        int toRow = fromRow + screen.getTerminalSize().getRows();
+		        int fromCol = 0;
+		        int toCol = fromCol + screen.getTerminalSize().getRows();
+
+		        engine.forEachEntity(Mappers.position, e -> {
+		        	Coords coords = e.position.getCoords();
+		        	int row = coords.row;
+		        	int col = coords.col;
+		        	if (row >= fromRow && row <= toRow && col >= fromCol && col <= toCol) {
+		        		displayList.add(e);
 			        }
+		        });
+
+		        for (Entity entity : displayList) {
+		        	if (entity.asciiRepresentation == null) {
+		        		continue;
+			        }
+			        TextCharacter tc = new TextCharacter(
+					        entity.asciiRepresentation.getChar(),
+					        Util.colors.get(entity.asciiRepresentation.getColor()),
+					        TextColor.ANSI.BLACK);
+		        	Coords coords = entity.position.getCoords();
+			        screen.setCharacter(coords.col, coords.row, tc);
 		        }
 
 		        screen.refresh();
@@ -74,7 +78,7 @@ public class Main {
 			        break main_loop;
 		        }
 
-		        engine.forEach(Mappers.player, Mappers.movement, (e,m) -> {
+		        engine.forEach(Mappers.player, Mappers.position, (e,m) -> {
 		        	if (command == null) {
 		        		return;
 					}

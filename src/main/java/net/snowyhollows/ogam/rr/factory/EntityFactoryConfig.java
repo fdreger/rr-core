@@ -5,27 +5,24 @@ import net.snowyhollows.bento2.BentoFactory;
 import net.snowyhollows.bento2.annotation.ByFactory;
 import net.snowyhollows.bento2.annotation.WithFactory;
 import net.snowyhollows.ogam.rr.BentoInstance;
+import net.snowyhollows.ogam.rr.EntityEngine;
 import net.snowyhollows.ogam.rr.Player;
 import net.snowyhollows.ogam.rr.core.Entity;
 import net.snowyhollows.ogam.rr.core.lore.Door;
 import net.snowyhollows.ogam.rr.feature.ascii.component.AsciiRepresentation;
 import net.snowyhollows.ogam.rr.feature.ascii.component.AsciiRepresentationImpl;
-import net.snowyhollows.ogam.rr.feature.space.Space;
-import net.snowyhollows.ogam.rr.feature.space.component.impl.MovementImpl;
+import net.snowyhollows.ogam.rr.feature.space.component.impl.PositionImpl;
 import net.snowyhollows.ogam.rr.feature.space.component.impl.PotentialObstacleImpl;
 
-/**
- * @author efildre
- */
 public class EntityFactoryConfig {
 
 	@WithFactory
-	public EntityFactoryConfig(@ByFactory(BentoInstance.class)Bento bento, Space space) {
+	public EntityFactoryConfig(@ByFactory(BentoInstance.class)Bento bento, EntityEngine engine) {
 
 		bento.register("entity.character", (BentoFactory) b -> {
 			Entity e = new Entity();
 			e.player = new Player();
-			e.movement = new MovementImpl(space, e);
+			e.position = new PositionImpl(engine, e);
 			e.asciiRepresentation = new AsciiRepresentationImpl(AsciiRepresentation.Color.RED, '@');
 			return e;
 		});
@@ -43,7 +40,7 @@ public class EntityFactoryConfig {
 			e.obstacle = door;
 			e.bumpable = door;
 			e.asciiRepresentation = door;
-			e.movement = new MovementImpl(space, e);
+			e.position = new PositionImpl(engine, e);
 			return e;
 		});
 
@@ -53,9 +50,4 @@ public class EntityFactoryConfig {
 		});
 	}
 
-
-	// helper, to make the syntax nicer
-	private void register(Bento bento, String key, BentoFactory bf) {
-		bento.register(key, bf);
-	}
 }

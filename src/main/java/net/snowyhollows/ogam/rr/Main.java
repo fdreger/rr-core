@@ -1,9 +1,5 @@
 package net.snowyhollows.ogam.rr;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-
 import com.googlecode.lanterna.TextCharacter;
 import com.googlecode.lanterna.TextColor;
 import com.googlecode.lanterna.screen.Screen;
@@ -16,6 +12,10 @@ import net.snowyhollows.ogam.rr.factory.AllFactoryConfigs;
 import net.snowyhollows.ogam.rr.feature.space.Coords;
 import net.snowyhollows.ogam.rr.feature.space.Direction;
 import net.snowyhollows.ogam.rr.feature.space.LevelGenerator;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Main {
 
@@ -48,7 +48,7 @@ public class Main {
 		        int fromRow = 0;
 		        int toRow = fromRow + screen.getTerminalSize().getRows();
 		        int fromCol = 0;
-		        int toCol = fromCol + screen.getTerminalSize().getRows();
+		        int toCol = fromCol + screen.getTerminalSize().getColumns();
 
 		        engine.forEachEntity(Mappers.position, e -> {
 		        	Coords coords = e.position.getCoords();

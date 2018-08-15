@@ -5,7 +5,8 @@ import net.bajobongo.beach.engine.Engine;
 public class Buffer2D<T> {
 	private final Engine<T> engine;
 
-	public interface Buffer2DBrush<S> {
+
+    public interface Buffer2DBrush<S> {
 		S stamp(int row, int col);
 	}
 
@@ -20,7 +21,10 @@ public class Buffer2D<T> {
 				brush.stamp(row, col);
 			}
 		}
+	}
 
+	public void stamp(int row, int col, Buffer2DBrush<T> floorBrush) {
+    	floorBrush.stamp(row, col);
 	}
 
 	public void drawLine(int row1, int col1, int row2, int col2, Buffer2DBrush<T> brush) {

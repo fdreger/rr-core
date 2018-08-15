@@ -24,6 +24,7 @@ public class EntityFactoryConfig {
 			e.player = new Player();
 			e.position = new PositionImpl(engine, e);
 			e.asciiRepresentation = new AsciiRepresentationImpl(AsciiRepresentation.Color.RED, '@');
+			engine.addEntity(e);
 			return e;
 		});
 
@@ -31,6 +32,8 @@ public class EntityFactoryConfig {
 			Entity e = new Entity();
 			e.obstacle = new PotentialObstacleImpl(true);
 			e.asciiRepresentation = new AsciiRepresentationImpl(AsciiRepresentation.Color.WHITE, '#');
+			e.position = new PositionImpl(engine, e);
+			engine.addEntity(e);
 			return e;
 		});
 
@@ -41,11 +44,14 @@ public class EntityFactoryConfig {
 			e.bumpable = door;
 			e.asciiRepresentation = door;
 			e.position = new PositionImpl(engine, e);
+			engine.addEntity(e);
 			return e;
 		});
 
 		bento.register("entity.nothing", (BentoFactory) b -> {
 			Entity e = new Entity();
+			e.position = new PositionImpl(engine, e);
+			engine.addEntity(e);
 			return e;
 		});
 	}

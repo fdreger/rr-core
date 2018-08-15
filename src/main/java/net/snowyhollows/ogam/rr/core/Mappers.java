@@ -3,7 +3,6 @@ package net.snowyhollows.ogam.rr.core;
 import net.bajobongo.beach.engine.ComponentMapper;
 import net.snowyhollows.ogam.rr.Player;
 import net.snowyhollows.ogam.rr.feature.ascii.component.AsciiRepresentation;
-import net.snowyhollows.ogam.rr.feature.space.Presence;
 import net.snowyhollows.ogam.rr.feature.space.component.Bumpable;
 import net.snowyhollows.ogam.rr.feature.space.component.Position;
 import net.snowyhollows.ogam.rr.feature.space.component.PotentialObstacle;

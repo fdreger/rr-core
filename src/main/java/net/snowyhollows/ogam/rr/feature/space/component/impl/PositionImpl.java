@@ -12,20 +12,13 @@ import net.snowyhollows.ogam.rr.feature.space.Direction;
 import net.snowyhollows.ogam.rr.feature.space.component.Position;
 
 public class PositionImpl implements Position, Serializable {
-    private Coords coords;
+    private Coords coords = NOWHERE;
 	private final EntityEngine engine;
 	private final Entity me;
-    private final Optional optionalThis;
 
     public PositionImpl(EntityEngine e, Entity entity) {
 	    engine = e;
 	    this.me = entity;
-        optionalThis = Optional.of(this.me);
-    }
-
-    @Override
-    public Optional presentAt(Coords coords) {
-        return coords.equals(this.coords) ? optionalThis : Optional.empty();
     }
 
     private static ArrayList<Entity> tmpTargetEntities = new ArrayList<>();
@@ -64,6 +57,8 @@ public class PositionImpl implements Position, Serializable {
     @Override
     public void setCoords(Coords coords) {
         this.coords = coords;
+        if (coords.equals(NOWHERE)) return;
+
 	    engine.forEachEntity(Mappers.position, e -> {
 	    	if (e.position.getCoords().equals(coords) && e.treadable != null) {
 	    		e.treadable.treadOn(me);

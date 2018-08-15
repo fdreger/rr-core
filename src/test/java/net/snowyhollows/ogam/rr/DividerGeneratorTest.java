@@ -7,11 +7,7 @@ import net.snowyhollows.ogam.rr.util.ObjectArray2D;
 
 import org.junit.Test;
 
-/**
- * @author efildre
- */
 public class DividerGeneratorTest {
-
 
     @Test
     public void shouldNotThrow() {
@@ -23,8 +19,5 @@ public class DividerGeneratorTest {
 
         DividerGenerator dg = new DividerGenerator(25, 80, wall, nothing);
         ObjectArray2D entityArray2D = new ObjectArray2D(30, 85, nothing, null);
-        dg.render(entityArray2D, () -> new Entity());
-
-        System.out.println(entityArray2D.toString(e -> e.asciiRepresentation));
     }
 }

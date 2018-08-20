@@ -3,6 +3,8 @@ package net.snowyhollows.ogam.rr.core;
 import net.bajobongo.beach.engine.ComponentMapper;
 import net.snowyhollows.ogam.rr.Player;
 import net.snowyhollows.ogam.rr.feature.ascii.component.AsciiRepresentation;
+import net.snowyhollows.ogam.rr.feature.combat.component.GradientObserver;
+import net.snowyhollows.ogam.rr.feature.space.Gradient;
 import net.snowyhollows.ogam.rr.feature.space.component.Bumpable;
 import net.snowyhollows.ogam.rr.feature.space.component.Position;
 import net.snowyhollows.ogam.rr.feature.space.component.PotentialObstacle;
@@ -22,6 +24,8 @@ public class Mappers {
 			= new ComponentMapper<>(e -> e.player, (e, t) -> e.player = t);
 	public final static ComponentMapper<AsciiRepresentation, Entity> asciiRepresentation
 			= new ComponentMapper<>(e -> e.asciiRepresentation, (e, t) -> e.asciiRepresentation= t);
-
-
+	public final static ComponentMapper<Gradient, Entity> gradient
+			= new ComponentMapper<>(e -> e.gradient, (e, t) -> e.gradient = t);
+	public final static ComponentMapper<GradientObserver, Entity> gradientObserver
+			= new ComponentMapper<>(e -> e.gradientObserver , (e, t) -> e.gradientObserver = t);
 }

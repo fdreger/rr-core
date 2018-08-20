@@ -10,6 +10,10 @@ public class Gradient {
 		boolean isTraversable(Coords coords);
 	}
 
+	public int get(Coords coords) {
+		return values.getOrDefault(coords, Integer.MAX_VALUE);
+	}
+
 	public void clear() {
 		values.clear();
 	}
@@ -27,10 +31,11 @@ public class Gradient {
 
 		int current = values.getOrDefault(coords, Integer.MAX_VALUE);
 
-		if (value < current) {
-			values.put(coords, value);
+		if (value >= current) {
+			return;
 		}
 
+		values.put(coords, value);
 		for (Direction direction : directions) {
 			createFrom(value + 1, limit, informer, direction.step(coords));
 		}

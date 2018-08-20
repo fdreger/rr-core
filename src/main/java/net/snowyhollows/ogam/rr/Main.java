@@ -91,6 +91,24 @@ public class Main {
 			        }
 		        });
 
+                engine.forEach(Mappers.gradient, Mappers.position, (gradient, position) -> {
+                    gradient.clear();
+                    gradient.create(position.getCoords(), 6, c -> {
+                        for (Entity entity : displayList) {
+                            if (entity.position.getCoords().equals(c) && entity.obstacle != null && entity.obstacle.isObstacleFor(null)) {
+                                return false;
+                            }
+                        }
+                        return true;
+                    });
+
+                    Entity gradientOrigin = engine.currentEntity();
+                    engine.forEach(Mappers.gradientObserver, Mappers.position, (gradientObserver, observerPosition) -> {
+                        if (gradient.get(observerPosition.getCoords()) < Integer.MAX_VALUE) {
+                            gradientObserver.touchedBy(gradientOrigin);
+                        }
+                    });
+                });
 	        }
 
 

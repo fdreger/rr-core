@@ -11,6 +11,8 @@ import net.snowyhollows.ogam.rr.core.Entity;
 import net.snowyhollows.ogam.rr.core.lore.Door;
 import net.snowyhollows.ogam.rr.feature.ascii.component.AsciiRepresentation;
 import net.snowyhollows.ogam.rr.feature.ascii.component.AsciiRepresentationImpl;
+import net.snowyhollows.ogam.rr.feature.combat.component.impl.GradientObserverImpl;
+import net.snowyhollows.ogam.rr.feature.space.Gradient;
 import net.snowyhollows.ogam.rr.feature.space.component.impl.PositionImpl;
 import net.snowyhollows.ogam.rr.feature.space.component.impl.PotentialObstacleImpl;
 
@@ -24,6 +26,7 @@ public class EntityFactoryConfig {
 			e.player = new Player();
 			e.position = new PositionImpl(engine, e);
 			e.asciiRepresentation = new AsciiRepresentationImpl(AsciiRepresentation.Color.RED, '@');
+			e.gradient = new Gradient();
 			engine.addEntity(e);
 			return e;
 		});
@@ -43,6 +46,7 @@ public class EntityFactoryConfig {
 			e.obstacle = door;
 			e.bumpable = door;
 			e.asciiRepresentation = door;
+			e.gradientObserver = new GradientObserverImpl(e);
 			e.position = new PositionImpl(engine, e);
 			engine.addEntity(e);
 			return e;

@@ -18,8 +18,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Main {
-
-
 	public enum PlayerCommand {
     	LEFT, RIGHT, UP, DOWN, QUIT
 	}
@@ -90,6 +88,13 @@ public class Main {
 				        case RIGHT: m.move(Direction.E); break;
 			        }
 		        });
+
+		        engine.forEach(Mappers.destructible, d -> {
+		        	if (d.isDestroyed()) {
+						System.out.println(engine.currentEntity() + " is destroyed");
+		        		engine.removeCurrentEntity();
+					}
+				});
 
                 engine.forEach(Mappers.gradient, Mappers.position, (gradient, position) -> {
                     gradient.clear();

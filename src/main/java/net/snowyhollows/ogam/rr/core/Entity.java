@@ -2,6 +2,9 @@ package net.snowyhollows.ogam.rr.core;
 
 import net.snowyhollows.ogam.rr.Player;
 import net.snowyhollows.ogam.rr.feature.ascii.component.AsciiRepresentation;
+import net.snowyhollows.ogam.rr.feature.combat.component.Attackable;
+import net.snowyhollows.ogam.rr.feature.combat.component.BasicAttributes;
+import net.snowyhollows.ogam.rr.feature.combat.component.Destructible;
 import net.snowyhollows.ogam.rr.feature.combat.component.GradientObserver;
 import net.snowyhollows.ogam.rr.feature.space.Gradient;
 import net.snowyhollows.ogam.rr.feature.space.component.Bumpable;
@@ -18,4 +21,7 @@ public class Entity {
 	public Player player;
 	public Gradient gradient;
 	public GradientObserver gradientObserver;
+	public BasicAttributes basicAttributes;
+	public Destructible destructible;
+	public Attackable attackable;
 }

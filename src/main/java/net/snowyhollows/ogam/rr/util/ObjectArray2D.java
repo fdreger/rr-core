@@ -19,8 +19,8 @@ public class ObjectArray2D<T> {
 		this.cols = cols;
 		this.outsideObject = outsideObject;
 		this.nullObject = nullObject;
-		this.entities = new Object[rows * cols];;
-	}
+		this.entities = new Object[rows * cols];
+    }
 
 	public void fillWith(T entity) {
 		Arrays.fill(entities, entity);

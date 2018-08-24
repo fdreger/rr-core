@@ -14,11 +14,11 @@ public class Dice {
 	}
 
 	public Value constant(int c) {
-		return new Value(random, c, 0, 0);
+		return new Value(random, 1, c);
 	}
 
 	public Value roll(int rolls, int sides, int bonus) {
-		return new Value(random, bonus, sides, rolls);
+		return new Value(random, sides, rolls);
 	}
 }
 

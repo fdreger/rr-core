@@ -2,6 +2,7 @@ package net.snowyhollows.ogam.rr.core;
 
 import net.bajobongo.beach.engine.ComponentMapper;
 import net.snowyhollows.ogam.rr.Player;
+import net.snowyhollows.ogam.rr.feature.ai.component.Actor;
 import net.snowyhollows.ogam.rr.feature.ascii.component.AsciiRepresentation;
 import net.snowyhollows.ogam.rr.feature.combat.component.Attackable;
 import net.snowyhollows.ogam.rr.feature.combat.component.Destructible;
@@ -34,4 +35,6 @@ public class Mappers {
 			= new ComponentMapper<>(e -> e.attackable, (e, t) -> e.attackable = t);
 	public final static ComponentMapper<Destructible, Entity> destructible
 			= new ComponentMapper<>(e -> e.destructible, (e, t) -> e.destructible= t);
+	public final static ComponentMapper<Actor, Entity> actor
+			= new ComponentMapper<>(e -> e.actor, (e, t) -> e.actor = t);
 }

@@ -1,6 +1,7 @@
 package net.snowyhollows.ogam.rr.core;
 
 import net.snowyhollows.ogam.rr.Player;
+import net.snowyhollows.ogam.rr.feature.ai.component.Actor;
 import net.snowyhollows.ogam.rr.feature.ascii.component.AsciiRepresentation;
 import net.snowyhollows.ogam.rr.feature.combat.component.Attackable;
 import net.snowyhollows.ogam.rr.feature.combat.component.BasicAttributes;
@@ -24,4 +25,5 @@ public class Entity {
 	public BasicAttributes basicAttributes;
 	public Destructible destructible;
 	public Attackable attackable;
+	public Actor actor;
 }

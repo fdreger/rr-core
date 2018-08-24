@@ -25,10 +25,6 @@ public class Gradient {
 	}
 
 	public void createFrom(int value, int limit, GradientInformer informer, Coords coords) {
-		if (value >= limit || !informer.isTraversable(coords)) {
-			return;
-		}
-
 		int current = values.getOrDefault(coords, Integer.MAX_VALUE);
 
 		if (value >= current) {
@@ -36,11 +32,27 @@ public class Gradient {
 		}
 
 		values.put(coords, value);
-		for (Direction direction : directions) {
+
+        if (value > 0 && (value >= limit || !informer.isTraversable(coords))) {
+            return;
+        }
+
+        for (Direction direction : directions) {
 			createFrom(value + 1, limit, informer, direction.step(coords));
 		}
 
 	}
 
+	public Direction follow(Coords coords) {
+		int current = get(coords);
+
+		for (Direction direction : directions) {
+			if (get(direction.step(coords)) < current) {
+				return direction;
+			}
+		}
+
+		return Direction.ZERO;
+	}
 
 }

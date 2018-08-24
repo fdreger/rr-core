@@ -2,9 +2,13 @@ package net.snowyhollows.ogam.rr.core.lore;
 
 import net.snowyhollows.ogam.rr.core.Entity;
 import net.snowyhollows.ogam.rr.core.Value;
+import net.snowyhollows.ogam.rr.feature.ai.component.Actor;
 import net.snowyhollows.ogam.rr.feature.combat.component.BasicAttributes;
+import net.snowyhollows.ogam.rr.feature.combat.component.GradientObserver;
+import net.snowyhollows.ogam.rr.feature.space.Direction;
+import net.snowyhollows.ogam.rr.feature.space.Gradient;
 
-public class Monster implements BasicAttributes {
+public class Monster implements BasicAttributes, GradientObserver, Actor {
     private Value attackRoll = Value.ONE;
     private Value defenseRoll = Value.ONE;
     private Value damageRoll = Value.ONE;
@@ -29,4 +33,19 @@ public class Monster implements BasicAttributes {
         return damageRoll;
     }
 
+    @Override
+    public void act() {
+        if (gradient != null) {
+            Direction where = gradient.follow(me.position.getCoords());
+            me.position.move(where);
+        }
+        gradient = null;
+    }
+
+    private Gradient gradient;
+
+    @Override
+    public void touchedBy(Gradient gradient) {
+        this.gradient = gradient;
+    }
 }

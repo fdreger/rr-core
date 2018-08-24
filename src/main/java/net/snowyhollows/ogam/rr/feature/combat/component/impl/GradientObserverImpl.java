@@ -2,6 +2,7 @@ package net.snowyhollows.ogam.rr.feature.combat.component.impl;
 
 import net.snowyhollows.ogam.rr.core.Entity;
 import net.snowyhollows.ogam.rr.feature.combat.component.GradientObserver;
+import net.snowyhollows.ogam.rr.feature.space.Gradient;
 
 public class GradientObserverImpl implements GradientObserver {
     final Entity me;
@@ -11,7 +12,7 @@ public class GradientObserverImpl implements GradientObserver {
     }
 
     @Override
-    public void touchedBy(Entity entity) {
-        // TODO
+    public void touchedBy(Gradient gradient) {
+
     }
 }

@@ -12,6 +12,7 @@ import net.snowyhollows.ogam.rr.factory.AllFactoryConfigs;
 import net.snowyhollows.ogam.rr.feature.space.Coords;
 import net.snowyhollows.ogam.rr.feature.space.Direction;
 import net.snowyhollows.ogam.rr.feature.space.LevelGenerator;
+import net.snowyhollows.ogam.rr.feature.space.component.FovFow;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -25,6 +26,8 @@ public class Main {
     public static void main(String[] args) throws IOException {
 		BentoRunner.runWithClasspathProperties(MainFactory.IT, "/rr.properties");
     }
+
+    FovFow fovFow;
 
     @WithFactory
     public Main(AllFactoryConfigs allFactoryConfigs,
@@ -57,16 +60,53 @@ public class Main {
 			        }
 		        });
 
+                engine.forEach(Mappers.player, Mappers.position, (e,m) -> {
+
+                    fovFow = e.fovFow;
+                    e.fovFow.createFrom(m.getCoords().row, m.getCoords().col, 10, 1, c -> {
+                        for (Entity entity : displayList) {
+                            if (entity.obstacle != null &&
+                                    entity.position.getCoords().equals(c)
+                                    && (!entity.obstacle.isObstacleFor(null)
+                                    || !entity.obstacle.isTemporary())
+                                    ) {
+                                return 0;
+                            }
+                        }
+                        return 1;
+                    });
+                });
+
+                if (fovFow != null) {
+                    fovFow.forEachVisible(coords -> {
+                        TextCharacter tc = new TextCharacter(
+                                '.',
+                                TextColor.ANSI.YELLOW,
+                                TextColor.ANSI.BLACK);
+                        screen.setCharacter(coords.col - fromCol, coords.row - fromRow, tc);
+                    });
+
+                }
+
 		        for (Entity entity : displayList) {
 		        	if (entity.asciiRepresentation == null) {
 		        		continue;
 			        }
-			        TextCharacter tc = new TextCharacter(
-					        entity.asciiRepresentation.getChar(),
-					        Util.colors.get(entity.asciiRepresentation.getColor()),
-					        TextColor.ANSI.BLACK);
-		        	Coords coords = entity.position.getCoords();
-			        screen.setCharacter(coords.col, coords.row, tc);
+
+					Coords coords = entity.position.getCoords();
+
+                    if (
+                            (fovFow != null) && (
+                                    fovFow.isVisible(coords)
+                                    || (fovFow.isSeen(coords) && entity.obstacle != null && !entity.obstacle.isTemporary())
+                                    )) {
+                        TextCharacter tc = new TextCharacter(
+                                entity.asciiRepresentation.getChar(),
+                                Util.colors.get(entity.asciiRepresentation.getColor()),
+                                TextColor.ANSI.BLACK);
+                        screen.setCharacter(coords.col - fromCol, coords.row - fromRow, tc);
+                    }
+
 		        }
 
 		        screen.refresh();
@@ -77,6 +117,7 @@ public class Main {
 		        }
 
 		        engine.forEach(Mappers.player, Mappers.position, (e,m) -> {
+
 		        	if (command == null) {
 		        		return;
 					}
@@ -87,6 +128,9 @@ public class Main {
 				        case LEFT: m.move(Direction.W); break;
 				        case RIGHT: m.move(Direction.E); break;
 			        }
+                    fovFow = e.fovFow;
+
+
 		        });
 
 		        engine.forEach(Mappers.destructible, d -> {

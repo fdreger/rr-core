@@ -99,14 +99,14 @@ public class DividerGenerator {
 	}
 
 	public void render(Buffer2D<Entity> buffer,
-					   Buffer2D.Buffer2DBrush<Entity> doorBrush,
-					   Buffer2D.Buffer2DBrush<Entity> wallBrush,
-					   Buffer2D.Buffer2DBrush<Entity> floorBrush) {
+					   Buffer2D.Buffer2DBrush doorBrush,
+					   Buffer2D.Buffer2DBrush wallBrush,
+					   Buffer2D.Buffer2DBrush floorBrush) {
 		baseRoom.divideIfBigEnough();
 		render(baseRoom, buffer, doorBrush, wallBrush, floorBrush);
 	}
 
-	private<T> void render(DividerGenerator.SquareRoom room, Buffer2D<T> buffer, Buffer2D.Buffer2DBrush<T> doorBrush, Buffer2D.Buffer2DBrush<T> wallBrush, Buffer2D.Buffer2DBrush<T> floorBrush) {
+	private<T> void render(DividerGenerator.SquareRoom room, Buffer2D<T> buffer, Buffer2D.Buffer2DBrush doorBrush, Buffer2D.Buffer2DBrush wallBrush, Buffer2D.Buffer2DBrush floorBrush) {
 		buffer.drawLine(room.top, room.left, room.top, room.right, wallBrush);
 		buffer.drawLine(room.bottom, room.left, room.bottom, room.right, wallBrush);
 		buffer.drawLine(room.top, room.left, room.bottom, room.left, wallBrush);

@@ -31,15 +31,14 @@ public class LevelGenerator {
 
         Buffer2D<Entity> buffer = new Buffer2D<>(100, 100, engine);
 		dividerGenerator.render(buffer,
-				(r, c) -> { Entity e = bento.get("entity.monster"); e.position.setCoords(new Coords(r, c)); return e;},
-				(r, c) -> { Entity e = bento.get("entity.wall"); e.position.setCoords(new Coords(r, c)); return e;},
+				(r, c) -> { Entity e = bento.get("entity.monster"); e.position.setCoords(new Coords(r, c)); },
+				(r, c) -> { Entity e = bento.get("entity.wall"); e.position.setCoords(new Coords(r, c)); },
 				(r, c) -> {
 		            engine.forEach(Mappers.position, p -> {
 		                if (p.getCoords().col == c && p.getCoords().row == r) {
 		                    engine.removeCurrentEntity();
                         }
                     });
-		            return null;
 		        }
 		);
 	}

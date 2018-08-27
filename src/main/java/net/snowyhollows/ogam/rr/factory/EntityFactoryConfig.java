@@ -9,8 +9,13 @@ import net.snowyhollows.ogam.rr.EntityEngine;
 import net.snowyhollows.ogam.rr.Player;
 import net.snowyhollows.ogam.rr.core.Entity;
 import net.snowyhollows.ogam.rr.core.lore.Door;
+import net.snowyhollows.ogam.rr.core.lore.Monster;
 import net.snowyhollows.ogam.rr.feature.ascii.component.AsciiRepresentation;
 import net.snowyhollows.ogam.rr.feature.ascii.component.AsciiRepresentationImpl;
+import net.snowyhollows.ogam.rr.feature.combat.component.impl.AttackableImpl;
+import net.snowyhollows.ogam.rr.feature.combat.component.impl.DestructibleImpl;
+import net.snowyhollows.ogam.rr.feature.combat.component.impl.GradientObserverImpl;
+import net.snowyhollows.ogam.rr.feature.space.Gradient;
 import net.snowyhollows.ogam.rr.feature.space.component.impl.PositionImpl;
 import net.snowyhollows.ogam.rr.feature.space.component.impl.PotentialObstacleImpl;
 
@@ -21,9 +26,35 @@ public class EntityFactoryConfig {
 
 		bento.register("entity.character", (BentoFactory) b -> {
 			Entity e = new Entity();
-			e.player = new Player();
+            Player player = new Player();
+            AttackableImpl attackable = new AttackableImpl(e);
+            e.player = player;
+			e.obstacle = player;
+			e.basicAttributes = e.player;
+			e.attackable = attackable;
+			e.bumpable = attackable;
 			e.position = new PositionImpl(engine, e);
+            e.destructible = new DestructibleImpl(20);
 			e.asciiRepresentation = new AsciiRepresentationImpl(AsciiRepresentation.Color.RED, '@');
+			e.gradient = new Gradient();
+			engine.addEntity(e);
+			return e;
+		});
+
+		bento.register("entity.monster", (BentoFactory) b -> {
+			Entity e = new Entity();
+			e.gradientObserver = new GradientObserverImpl(e);
+			Monster monster = new Monster(e);
+			e.basicAttributes = monster;
+			e.gradientObserver = monster;
+			e.actor = monster;
+			AttackableImpl attackable = new AttackableImpl(e);
+			e.attackable = attackable;
+            e.obstacle = attackable;
+            e.bumpable = attackable;
+			e.destructible = new DestructibleImpl(10);
+			e.position = new PositionImpl(engine, e);
+			e.asciiRepresentation = new AsciiRepresentationImpl(AsciiRepresentation.Color.YELLOW, 'O');
 			engine.addEntity(e);
 			return e;
 		});
@@ -43,6 +74,7 @@ public class EntityFactoryConfig {
 			e.obstacle = door;
 			e.bumpable = door;
 			e.asciiRepresentation = door;
+			e.gradientObserver = new GradientObserverImpl(e);
 			e.position = new PositionImpl(engine, e);
 			engine.addEntity(e);
 			return e;

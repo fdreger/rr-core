@@ -8,7 +8,8 @@ public enum Direction  {
 	NE(new Coords(-1, 1)),
 	NW(new Coords(-1, -1)),
 	SE(new Coords(1, 1)),
-	SW(new Coords(1, -1));
+	SW(new Coords(1, -1)),
+    ZERO(new Coords(0, 0));
 
     private final Coords d;
 

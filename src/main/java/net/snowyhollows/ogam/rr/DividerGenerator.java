@@ -13,8 +13,6 @@ import java.util.function.Supplier;
 public class DividerGenerator {
 
 	private static final Random random = new Random();
-	private Entity wall;
-	private Entity nothing;
 
 	public static class SquareRoom {
 		int top, bottom, left, right;
@@ -96,11 +94,7 @@ public class DividerGenerator {
 
 	@WithFactory
 	public DividerGenerator(@ByName("level.height") int levelRows,
-							@ByName("level.width") int levelCols,
-							@ByName("entity.wall") Entity wall,
-							@ByName("entity.nothing") Entity nothing) {
-		this.wall = wall;
-		this.nothing = nothing;
+							@ByName("level.width") int levelCols) {
 		this.baseRoom = new SquareRoom(0, levelRows - 1, 0, levelCols - 1, -1, -1);
 	}
 

@@ -18,8 +18,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Main {
-
-
 	public enum PlayerCommand {
     	LEFT, RIGHT, UP, DOWN, QUIT
 	}
@@ -91,8 +89,35 @@ public class Main {
 			        }
 		        });
 
-	        }
+		        engine.forEach(Mappers.destructible, d -> {
+		        	if (d.isDestroyed()) {
+						System.out.println(engine.currentEntity() + " is destroyed");
+		        		engine.removeCurrentEntity();
+					}
+				});
 
+		        engine.forEach(Mappers.actor, a -> {
+		        	a.act();
+				});
+
+                engine.forEach(Mappers.gradient, Mappers.position, (gradient, position) -> {
+                    gradient.clear();
+                    gradient.create(position.getCoords(), 10, c -> {
+                        for (Entity entity : displayList) {
+                            if (entity.position.getCoords().equals(c) && entity.obstacle != null && entity.obstacle.isObstacleFor(null) && !entity.obstacle.isTemporary()) {
+                                return false;
+                            }
+                        }
+                        return true;
+                    });
+
+                    engine.forEach(Mappers.gradientObserver, Mappers.position, (gradientObserver, observerPosition) -> {
+                        if (gradient.get(observerPosition.getCoords()) < Integer.MAX_VALUE) {
+                            gradientObserver.touchedBy(gradient);
+                        }
+                    });
+                });
+	        }
 
 	        screen.stopScreen();
         } catch (IOException e) {

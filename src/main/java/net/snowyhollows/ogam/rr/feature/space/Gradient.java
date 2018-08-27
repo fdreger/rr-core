@@ -6,6 +6,16 @@ import java.util.Map;
 public class Gradient {
 	private Map<Coords, Integer> values = new HashMap<>();
 
+	private final class Info {
+		final int distance;
+		final boolean occupied;
+
+		private Info(int distance, boolean occupied) {
+			this.distance = distance;
+			this.occupied = occupied;
+		}
+	}
+
 	public interface GradientInformer {
 		boolean isTraversable(Coords coords);
 	}
@@ -31,13 +41,13 @@ public class Gradient {
 			return;
 		}
 
-		values.put(coords, value);
-
         if (value > 0 && (value >= limit || !informer.isTraversable(coords))) {
             return;
         }
 
-        for (Direction direction : directions) {
+		values.put(coords, value);
+
+		for (Direction direction : directions) {
 			createFrom(value + 1, limit, informer, direction.step(coords));
 		}
 

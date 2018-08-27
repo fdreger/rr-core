@@ -34,4 +34,9 @@ public class AttackableImpl implements Attackable, Bumpable, PotentialObstacle {
     public boolean isObstacleFor(Entity other) {
         return true;
     }
+
+    @Override
+    public boolean isTemporary() {
+        return true;
+    }
 }

@@ -27,10 +27,14 @@ public class EntityFactoryConfig {
 		bento.register("entity.character", (BentoFactory) b -> {
 			Entity e = new Entity();
             Player player = new Player();
-			e.player = player;
+            AttackableImpl attackable = new AttackableImpl(e);
+            e.player = player;
 			e.obstacle = player;
 			e.basicAttributes = e.player;
+			e.attackable = attackable;
+			e.bumpable = attackable;
 			e.position = new PositionImpl(engine, e);
+            e.destructible = new DestructibleImpl(20);
 			e.asciiRepresentation = new AsciiRepresentationImpl(AsciiRepresentation.Color.RED, '@');
 			e.gradient = new Gradient();
 			engine.addEntity(e);

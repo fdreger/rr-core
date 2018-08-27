@@ -9,9 +9,9 @@ import net.snowyhollows.ogam.rr.feature.space.Direction;
 import net.snowyhollows.ogam.rr.feature.space.Gradient;
 
 public class Monster implements BasicAttributes, GradientObserver, Actor {
-    private Value attackRoll = Value.ONE;
-    private Value defenseRoll = Value.ONE;
-    private Value damageRoll = Value.ONE;
+    private Value attackRoll = new Value(Value.RANDOM, 8, 1);
+    private Value defenseRoll = new Value(Value.RANDOM, 8, 1);
+    private Value damageRoll = new Value(Value.RANDOM, 8, 1);
     private Entity me;
 
     public Monster(Entity me) {

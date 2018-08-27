@@ -104,7 +104,7 @@ public class Main {
                     gradient.clear();
                     gradient.create(position.getCoords(), 10, c -> {
                         for (Entity entity : displayList) {
-                            if (entity.position.getCoords().equals(c) && entity.obstacle != null && entity.obstacle.isObstacleFor(null)) {
+                            if (entity.position.getCoords().equals(c) && entity.obstacle != null && entity.obstacle.isObstacleFor(null) && !entity.obstacle.isTemporary()) {
                                 return false;
                             }
                         }
@@ -118,7 +118,6 @@ public class Main {
                     });
                 });
 	        }
-
 
 	        screen.stopScreen();
         } catch (IOException e) {

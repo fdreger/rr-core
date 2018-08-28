@@ -19,7 +19,7 @@ repositories {
 dependencies {
     testCompile("junit", "junit", "4.12")
     compile("com.googlecode.lanterna", "lanterna", "3.0.1")
-    compile("net.snowyhollows.beach", "beach", "1.0")
+    compile("net.snowyhollows.beach", "beach", "1.0", null, "sources")
     compile("net.snowyhollows.beach", "beach", "1.0")
     compile("net.snowyhollows.bento", "bento2-core", "1.1.2")
     annotationProcessor("net.snowyhollows.bento", "bento2-generator", "1.0")

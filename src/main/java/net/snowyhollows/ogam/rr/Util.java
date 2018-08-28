@@ -17,18 +17,18 @@ public enum Util {;
 		colors.put(AsciiRepresentation.Color.YELLOW, TextColor.ANSI.YELLOW);
 	}
 
-	public static Main.PlayerCommand commandFromKeyStroke(KeyStroke keyStroke) {
+	public static PlayerCommand commandFromKeyStroke(KeyStroke keyStroke) {
 		switch (keyStroke.getKeyType()) {
-			case ArrowUp: return Main.PlayerCommand.UP;
-			case ArrowDown: return Main.PlayerCommand.DOWN;
-			case ArrowLeft: return Main.PlayerCommand.LEFT;
-			case ArrowRight: return Main.PlayerCommand.RIGHT;
+			case ArrowUp: return PlayerCommand.UP;
+			case ArrowDown: return PlayerCommand.DOWN;
+			case ArrowLeft: return PlayerCommand.LEFT;
+			case ArrowRight: return PlayerCommand.RIGHT;
 
 			default:
 				Character character = keyStroke.getCharacter();
 				if (character != null) {
 					switch (character) {
-						case 'q': return Main.PlayerCommand.QUIT;
+						case 'q': return PlayerCommand.QUIT;
 					}
 				}
 		}

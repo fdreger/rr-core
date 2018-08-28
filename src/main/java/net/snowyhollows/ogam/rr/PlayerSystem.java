@@ -13,7 +13,7 @@ public class PlayerSystem {
         this.engine = entityEngine;
     }
 
-    public void run(Main.PlayerCommand command) {
+    public void run(PlayerCommand command) {
         engine.forEach(Mappers.player, Mappers.position, (e, m) -> {
             if (command == null) {
                 return;

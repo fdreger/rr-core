@@ -2,6 +2,7 @@ plugins {
     java
     application
     id("net.ltgt.apt-idea").version("0.18")
+    id("gwt").version("0.6")
 }
 
 group = "net.snowyhollows.omg.rr"
@@ -27,4 +28,9 @@ dependencies {
 
 configure<JavaPluginConvention> {
     sourceCompatibility = JavaVersion.VERSION_1_8
+}
+
+gwt {
+    version = "2.8"
+    modules = mutableListOf("a.b.c.d.e")
 }

@@ -1,0 +1,13 @@
+<!DOCTYPE module PUBLIC "-//Google Inc.//DTD Google Web Toolkit 2.8.0//EN"
+        "http://gwtproject.org/doctype/2.8.0/gwt-module.dtd">
+<module>
+
+    <inherits name='com.google.gwt.user.User'/>
+    <inherits name='BentoCore'/>
+    <inherits name="net.bajobongo.beach.Beach"/>
+    <source path="net/snowyhollows/ogam/rr" />
+    <public path="net/snowyhollows/ogam/rr/public" />
+
+    <entry-point class="net.snowyhollows.ogam.rr.client.RrCore"/>
+
+</module>

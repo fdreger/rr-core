@@ -16,24 +16,17 @@ import net.snowyhollows.ogam.rr.feature.space.system.FovSystem;
 import java.io.IOException;
 
 public class Main {
+    private GameItself gameItself;
 
     public static void main(String[] args) throws IOException {
 		BentoRunner.runWithClasspathProperties(MainFactory.IT, "/rr.properties");
     }
 
     @WithFactory
-    public Main(AllFactoryConfigs allFactoryConfigs,
+    public Main(
 		    @ByFactory(ScreenFactory.class) Screen screen,
-            LevelGenerator levelGenerator,
-		    DestructibleSystem destructibleSystem,
-		    ActorSystem actorSystem,
-		    GradientSystem gradientSystem,
-		    DisplayListSystem displayListSystem,
-		    AsciiDisplaySystem asciiDisplaySystem,
-		    PlayerSystem playerSystem,
-		    FovSystem fovSystem) {
-
-		levelGenerator.generate();
+			AsciiDisplaySystem asciiDisplaySystem,
+			GameItself gameItself) {
 
 		try {
 			screen.startScreen();
@@ -41,17 +34,10 @@ public class Main {
 			main_loop:
 	        while (true) {
 		        screen.clear();
-		        displayListSystem.displayList.clear();
-
-		        destructibleSystem.run();
-		        actorSystem.run();
-		        gradientSystem.run();
-		        displayListSystem.run();
-		        fovSystem.run();
-		        asciiDisplaySystem.run();
+		        gameItself.step();
 
 		        PlayerCommand command = Util.commandFromKeyStroke(screen.readInput());
-                playerSystem.run(command);
+                gameItself.execute(command);
 
 		        if (command == PlayerCommand.QUIT) {
 			        break main_loop;

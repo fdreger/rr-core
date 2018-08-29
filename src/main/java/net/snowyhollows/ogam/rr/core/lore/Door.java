@@ -25,6 +25,11 @@ public class Door implements Bumpable, PotentialObstacle, AsciiRepresentation {
 	}
 
 	@Override
+	public Color getBackgroundColor() {
+		return Color.BLACK;
+	}
+
+	@Override
 	public char getChar() {
 		return closed ? '+' : '/';
 	}

@@ -4,6 +4,8 @@ import java.util.Objects;
 
 public class Coords {
 
+    public static final Coords NOWHERE = new Coords(Integer.MIN_VALUE, Integer.MIN_VALUE);
+
     public final int row;
     public final int col;
 

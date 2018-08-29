@@ -8,6 +8,7 @@ import net.snowyhollows.ogam.rr.BentoInstance;
 import net.snowyhollows.ogam.rr.EntityEngine;
 import net.snowyhollows.ogam.rr.Player;
 import net.snowyhollows.ogam.rr.core.Entity;
+import net.snowyhollows.ogam.rr.core.MessageLog;
 import net.snowyhollows.ogam.rr.core.lore.Door;
 import net.snowyhollows.ogam.rr.core.lore.Monster;
 import net.snowyhollows.ogam.rr.feature.ascii.component.AsciiRepresentation;
@@ -22,12 +23,12 @@ import net.snowyhollows.ogam.rr.feature.space.component.impl.PotentialObstacleIm
 public class EntityFactoryConfig {
 
 	@WithFactory
-	public EntityFactoryConfig(@ByFactory(BentoInstance.class)Bento bento, EntityEngine engine) {
+	public EntityFactoryConfig(@ByFactory(BentoInstance.class)Bento bento, EntityEngine engine, MessageLog messageLog) {
 
 		bento.register("entity.character", (BentoFactory) b -> {
 			Entity e = new Entity();
             Player player = new Player();
-            AttackableImpl attackable = new AttackableImpl(e);
+            AttackableImpl attackable = new AttackableImpl(e, messageLog);
             e.player = player;
 			e.obstacle = player;
 			e.basicAttributes = e.player;
@@ -48,7 +49,7 @@ public class EntityFactoryConfig {
 			e.basicAttributes = monster;
 			e.gradientObserver = monster;
 			e.actor = monster;
-			AttackableImpl attackable = new AttackableImpl(e);
+			AttackableImpl attackable = new AttackableImpl(e, messageLog);
 			e.attackable = attackable;
             e.obstacle = attackable;
             e.bumpable = attackable;

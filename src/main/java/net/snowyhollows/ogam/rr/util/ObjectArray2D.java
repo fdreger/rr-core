@@ -14,12 +14,13 @@ public class ObjectArray2D<T> {
 	private final T outsideObject;
 	private final T nullObject;
 
-	public ObjectArray2D(int rows, int cols, T outsideObject, T nullObject) {
+	public ObjectArray2D(int rows, int cols, T outsideObject, T nullObject, Mapper<T> initializer) {
 		this.rows = rows;
 		this.cols = cols;
 		this.outsideObject = outsideObject;
 		this.nullObject = nullObject;
 		this.entities = new Object[rows * cols];
+		map(initializer);
     }
 
 	public void fillWith(T entity) {
@@ -40,6 +41,31 @@ public class ObjectArray2D<T> {
 	public void put(int row, int col, T e) {
 		if (isValid(row, col)) {
 			entities[row * cols + col] = e;
+		}
+	}
+
+	public interface Visitor<T> {
+		void visit(int row, int col, T object);
+	}
+
+    public interface Mapper<T> {
+        T map(int row, int col, T object);
+    }
+
+    public void map(Mapper<T> mapper) {
+        for (int row = 0; row < rows; row++) {
+            for (int col = 0; col < cols; col++) {
+                int idx = row * cols + col;
+                entities[idx] = mapper.map(row, col, (T)entities[idx]);
+            }
+        }
+    }
+
+	public void visit(Visitor<T> visitor) {
+		for (int row = 0; row < rows; row++) {
+			for (int col = 0; col < cols; col++) {
+				visitor.visit(row, col, get(row, col));
+			}
 		}
 	}
 

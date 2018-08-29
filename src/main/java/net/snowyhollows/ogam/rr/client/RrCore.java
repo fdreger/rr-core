@@ -11,7 +11,7 @@ import net.snowyhollows.ogam.rr.feature.space.component.DisplayListSystemFactory
 public class RrCore implements EntryPoint {
     GameItself gameItself;
     private DisplayListSystem displayListSystem;
-    private int COLS = 80;
+    private int COLS = 25;
     private int ROWS = 25;
     private GwtDisplaySystem gwtDisplaySystem;
 

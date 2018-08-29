@@ -20,7 +20,7 @@ public class FovSystem implements Runnable {
     @Override
     public void run() {
         engine.forEach(Mappers.player, Mappers.position, (e,m) -> {
-            e.fovFow.createFrom(m.getCoords().row, m.getCoords().col, 10, 1, c -> {
+            e.fovFow.createFrom(m.getCoords().row, m.getCoords().col, 5, 1, c -> {
                 for (Entity entity : displayListSystem.displayList) {
                     if (entity.obstacle != null &&
                             entity.position.getCoords().equals(c)

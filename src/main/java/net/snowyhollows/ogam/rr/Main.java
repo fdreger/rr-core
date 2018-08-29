@@ -42,6 +42,7 @@ public class Main {
 		        if (command == PlayerCommand.QUIT) {
 			        break main_loop;
 		        }
+		        asciiDisplaySystem.run();
 	        }
 
 	        screen.stopScreen();

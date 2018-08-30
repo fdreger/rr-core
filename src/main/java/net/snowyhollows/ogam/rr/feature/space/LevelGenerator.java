@@ -27,12 +27,12 @@ public class LevelGenerator {
 
 	public void generate() {
 		Entity hero = bento.get("entity.character");
-		hero.position.setCoords(new Coords(1, 4));
+		hero.position.setCoords(Coords.of(1, 4));
 
         Buffer2D<Entity> buffer = new Buffer2D<>(100, 100, engine);
 		dividerGenerator.render(buffer,
-				(r, c) -> { Entity e = bento.get("entity.monster"); e.position.setCoords(new Coords(r, c)); },
-				(r, c) -> { Entity e = bento.get("entity.wall"); e.position.setCoords(new Coords(r, c)); },
+				(r, c) -> { Entity e = bento.get("entity.monster"); e.position.setCoords(Coords.of(r, c)); },
+				(r, c) -> { Entity e = bento.get("entity.wall"); e.position.setCoords(Coords.of(r, c)); },
 				(r, c) -> {
 		            engine.forEach(Mappers.position, p -> {
 		                if (p.getCoords().col == c && p.getCoords().row == r) {

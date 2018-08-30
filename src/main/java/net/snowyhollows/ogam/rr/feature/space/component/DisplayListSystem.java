@@ -1,17 +1,12 @@
 package net.snowyhollows.ogam.rr.feature.space.component;
 
-import com.googlecode.lanterna.screen.Screen;
-import net.snowyhollows.bento2.annotation.ByFactory;
 import net.snowyhollows.bento2.annotation.ByName;
 import net.snowyhollows.bento2.annotation.WithFactory;
 import net.snowyhollows.ogam.rr.EntityEngine;
-import net.snowyhollows.ogam.rr.ScreenFactory;
 import net.snowyhollows.ogam.rr.core.Entity;
 import net.snowyhollows.ogam.rr.core.Mappers;
 import net.snowyhollows.ogam.rr.feature.space.Coords;
-
-import java.util.ArrayList;
-import java.util.List;
+import net.snowyhollows.ogam.rr.util.ObjectArray2D;
 
 public class DisplayListSystem implements Runnable {
 
@@ -20,7 +15,7 @@ public class DisplayListSystem implements Runnable {
     private final int toRow;
     public final int fromCol;
     private final int toCol;
-    public final List<Entity> displayList = new ArrayList<>();
+    private final ObjectArray2D<Entity> coordsIndex = new ObjectArray2D<>(100, 100, null, null);
 
     @WithFactory
     public DisplayListSystem(EntityEngine engine,
@@ -35,15 +30,20 @@ public class DisplayListSystem implements Runnable {
 
     @Override
     public void run() {
+        coordsIndex.fillWith(null);
         engine.forEachEntity(Mappers.position, e -> {
             Coords coords = e.position.getCoords();
             int row = coords.row;
             int col = coords.col;
-            if (row >= fromRow && row <= toRow && col >= fromCol && col <= toCol) {
-                displayList.add(e);
-            }
+            coordsIndex.put(row, col, e);
         });
+    }
 
+    public void visit(ObjectArray2D.Visitor<Entity> visitor) {
+        coordsIndex.visit(visitor);
+    }
 
+    public Entity get(int row, int col) {
+        return coordsIndex.get(row, col);
     }
 }

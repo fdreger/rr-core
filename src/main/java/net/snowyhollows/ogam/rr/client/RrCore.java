@@ -9,9 +9,8 @@ import net.snowyhollows.ogam.rr.feature.space.component.DisplayListSystem;
 import net.snowyhollows.ogam.rr.feature.space.component.DisplayListSystemFactory;
 
 public class RrCore implements EntryPoint {
-    GameItself gameItself;
-    private DisplayListSystem displayListSystem;
-    private int COLS = 25;
+    private GameItself gameItself;
+    private int COLS = 70;
     private int ROWS = 25;
     private GwtDisplaySystem gwtDisplaySystem;
 
@@ -20,7 +19,6 @@ public class RrCore implements EntryPoint {
                 .createRoot();
         bento.register("level.width", COLS);
         bento.register("level.height", ROWS);
-        displayListSystem = bento.get(DisplayListSystemFactory.IT);
         gameItself = bento.get(GameItselfFactory.IT);
         gwtDisplaySystem = bento.get(GwtDisplaySystemFactory.IT);
 

@@ -19,16 +19,13 @@ public class FovSystem implements Runnable {
 
     @Override
     public void run() {
-        engine.forEach(Mappers.player, Mappers.position, (e,m) -> {
-            e.fovFow.createFrom(m.getCoords().row, m.getCoords().col, 5, 1, c -> {
-                for (Entity entity : displayListSystem.displayList) {
-                    if (entity.obstacle != null &&
-                            entity.position.getCoords().equals(c)
-                            && (!entity.obstacle.isObstacleFor(null)
-                            || !entity.obstacle.isTemporary())
-                            ) {
-                        return 0;
-                    }
+        engine.forEach(Mappers.player, Mappers.position, (player, position) -> {
+            player.fovFow.createFrom(position.getCoords().row, position.getCoords().col, 5, 1, coords -> {
+                Entity entity = displayListSystem.get(coords.row, coords.col);
+                if (entity != null && entity.obstacle != null
+                        && (!entity.obstacle.isObstacleFor(null)
+                        || !entity.obstacle.isTemporary())) {
+                    return 0;
                 }
                 return 1;
             });

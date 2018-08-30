@@ -34,9 +34,9 @@ public class FovFow {
         }
     }
 
-    private ObjectArray2D<SquareData> data = new ObjectArray2D<>(80, 30,
+    private ObjectArray2D<SquareData> data = new ObjectArray2D<>(100, 100,
             new SquareData(Coords.NOWHERE),
-            new SquareData(Coords.NOWHERE), (row, col, x) -> new SquareData(new Coords(row, col))
+            new SquareData(Coords.NOWHERE), (row, col, x) -> new SquareData(Coords.of(row, col))
     );
 
     public void forEachVisible(Consumer<Coords> consumer) {
@@ -100,7 +100,5 @@ public class FovFow {
                 break;
             }
         }
-
     }
-
 }

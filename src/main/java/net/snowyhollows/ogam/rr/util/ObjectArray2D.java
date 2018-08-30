@@ -14,12 +14,16 @@ public class ObjectArray2D<T> {
 	private final T outsideObject;
 	private final T nullObject;
 
-	public ObjectArray2D(int rows, int cols, T outsideObject, T nullObject, Mapper<T> initializer) {
+	public ObjectArray2D(int rows, int cols, T outsideObject, T nullObject) {
 		this.rows = rows;
 		this.cols = cols;
 		this.outsideObject = outsideObject;
 		this.nullObject = nullObject;
 		this.entities = new Object[rows * cols];
+	}
+
+	public ObjectArray2D(int rows, int cols, T outsideObject, T nullObject, Mapper<T> initializer) {
+		this(rows, cols, outsideObject, nullObject);
 		map(initializer);
     }
 

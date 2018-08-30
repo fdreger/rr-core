@@ -3,7 +3,6 @@ package net.snowyhollows.ogam.rr;
 import net.snowyhollows.bento2.annotation.WithFactory;
 import net.snowyhollows.ogam.rr.factory.AllFactoryConfigs;
 import net.snowyhollows.ogam.rr.feature.ai.system.ActorSystem;
-import net.snowyhollows.ogam.rr.feature.ascii.system.AsciiDisplaySystem;
 import net.snowyhollows.ogam.rr.feature.combat.system.DestructibleSystem;
 import net.snowyhollows.ogam.rr.feature.combat.system.GradientSystem;
 import net.snowyhollows.ogam.rr.feature.space.LevelGenerator;
@@ -43,8 +42,8 @@ public class GameItself {
     }
 
     public void step() {
-        displayListSystem.displayList.clear();
         destructibleSystem.run();
+        fovSystem.run();
         actorSystem.run();
         gradientSystem.run();
         displayListSystem.run();

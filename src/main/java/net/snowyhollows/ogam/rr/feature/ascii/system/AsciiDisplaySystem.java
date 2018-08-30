@@ -46,9 +46,9 @@ public class AsciiDisplaySystem implements Runnable {
             }
         });
 
-        for (Entity entity : displayListSystem.displayList) {
-            if (entity.asciiRepresentation == null) {
-                continue;
+        displayListSystem.visit( (row, col, entity) -> {
+            if (entity == null || entity.asciiRepresentation == null) {
+                return;
             }
 
             Coords coords = entity.position.getCoords();
@@ -63,7 +63,7 @@ public class AsciiDisplaySystem implements Runnable {
                         TextColor.ANSI.BLACK);
                 screen.setCharacter(coords.col - displayListSystem.fromCol, coords.row - displayListSystem.fromRow, tc);
             }
-        }
+        });
 
         try {
             screen.refresh();

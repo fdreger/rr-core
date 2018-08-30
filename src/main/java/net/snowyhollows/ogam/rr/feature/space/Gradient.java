@@ -50,7 +50,6 @@ public class Gradient {
 		for (Direction direction : directions) {
 			createFrom(value + 1, limit, informer, direction.step(coords));
 		}
-
 	}
 
 	public Direction follow(Coords coords) {

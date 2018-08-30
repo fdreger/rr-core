@@ -24,13 +24,10 @@ public class GradientSystem  implements Runnable {
         engine.forEach(Mappers.gradient, Mappers.position, (gradient, position) -> {
             gradient.clear();
             gradient.create(position.getCoords(), 10, c -> {
-                for (Entity entity : displayListSystem.displayList) {
-                    if (entity.position.getCoords().equals(c) && entity.obstacle != null && entity.obstacle.isObstacleFor(null) && !entity.obstacle.isTemporary()) {
-                        return false;
-                    }
-                }
-                return true;
+                Entity entity = displayListSystem.get(c.row, c.col);
+                return entity == null || entity.obstacle == null || (!entity.obstacle.isObstacleFor(null) || entity.obstacle.isTemporary());
             });
+
 
             engine.forEach(Mappers.gradientObserver, Mappers.position, (gradientObserver, observerPosition) -> {
                 if (gradient.get(observerPosition.getCoords()) < Integer.MAX_VALUE) {

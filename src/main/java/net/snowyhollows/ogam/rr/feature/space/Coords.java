@@ -9,13 +9,17 @@ public class Coords {
     public final int row;
     public final int col;
 
-    public Coords(int row, int col) {
+    public static Coords of(int row, int col) {
+        return new Coords(row, col);
+    }
+
+    private Coords(int row, int col) {
         this.row = row;
         this.col = col;
     }
 
     public Coords add(Coords other) {
-        return new Coords(row + other.row, col + other.col);
+        return Coords.of(row + other.row, col + other.col);
     }
 
     @Override
@@ -29,7 +33,6 @@ public class Coords {
 
     @Override
     public int hashCode() {
-
         return Objects.hash(row, col);
     }
 }

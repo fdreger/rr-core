@@ -1,7 +1,8 @@
 body {
-    background-color: white;
-    color: black;
-    font-family: Arial, sans-serif;
-    font-size: small;
-    margin: 8px;
+    margin: 0px;
+    padding: 0px;
+}
+
+canvas {
+    width: 100%;
 }

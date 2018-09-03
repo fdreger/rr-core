@@ -1,17 +1,14 @@
 package net.snowyhollows.ogam.rr.client;
 
 import com.google.gwt.core.client.EntryPoint;
-import com.google.gwt.user.client.ui.RootLayoutPanel;
+import elemental2.promise.Promise;
 import net.snowyhollows.bento2.Bento;
 import net.snowyhollows.ogam.rr.*;
-import net.snowyhollows.ogam.rr.core.Entity;
-import net.snowyhollows.ogam.rr.feature.space.component.DisplayListSystem;
-import net.snowyhollows.ogam.rr.feature.space.component.DisplayListSystemFactory;
 
 public class RrCore implements EntryPoint {
     private GameItself gameItself;
-    private int COLS = 70;
-    private int ROWS = 25;
+    private int COLS = 80;
+    private int ROWS = 45;
     private GwtDisplaySystem gwtDisplaySystem;
 
     public void onModuleLoad() {
@@ -22,24 +19,26 @@ public class RrCore implements EntryPoint {
         gameItself = bento.get(GameItselfFactory.IT);
         gwtDisplaySystem = bento.get(GwtDisplaySystemFactory.IT);
 
-        gwtDisplaySystem.addKeyPressHandler(k -> {
+        gwtDisplaySystem.keyboardListener = (k -> {
             PlayerCommand command = null;
-            switch (k.getCharCode()) {
-                case 'a': command = PlayerCommand.LEFT; break;
-                case 'd': command = PlayerCommand.RIGHT; break;
-                case 'w': command = PlayerCommand.UP; break;
-                case 's': command = PlayerCommand.DOWN; break;
+            switch (k) {
+                case "a": case "ArrowLeft": command = PlayerCommand.LEFT; break;
+                case "d": case "ArrowRight": command = PlayerCommand.RIGHT; break;
+                case "w": case "ArrowUp": command = PlayerCommand.UP; break;
+                case "s": case "ArrowDown": command = PlayerCommand.DOWN; break;
             }
             if (command != null) {
                 gameItself.execute(command);
             }
             tick();
         });
-        tick();
+
+        gwtDisplaySystem.initiated.then(ignored -> Promise.resolve(tick()));
     }
 
-    public void tick() {
+    public Void tick() {
         gameItself.step();
         gwtDisplaySystem.run();
+        return null;
     }
 }

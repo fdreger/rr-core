@@ -27,6 +27,8 @@ dependencies {
     compile("net.snowyhollows.beach", "beach", "1.0")
     compile("net.snowyhollows.bento", "bento2-core", "1.1.2")
     compile ("com.google.gwt", "gwt", "2.8.2")
+    compile ("com.google.elemental2", "elemental2-core", "1.0.0-RC1")
+    compile ("com.google.elemental2", "elemental2-dom", "1.0.0-RC1")
     annotationProcessor("net.snowyhollows.bento", "bento2-generator", "1.0")
 }
 

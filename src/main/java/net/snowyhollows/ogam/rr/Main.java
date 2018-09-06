@@ -4,14 +4,7 @@ import com.googlecode.lanterna.screen.Screen;
 import net.snowyhollows.bento2.BentoRunner;
 import net.snowyhollows.bento2.annotation.ByFactory;
 import net.snowyhollows.bento2.annotation.WithFactory;
-import net.snowyhollows.ogam.rr.factory.AllFactoryConfigs;
-import net.snowyhollows.ogam.rr.feature.ai.system.ActorSystem;
-import net.snowyhollows.ogam.rr.feature.ascii.system.AsciiDisplaySystem;
-import net.snowyhollows.ogam.rr.feature.combat.system.DestructibleSystem;
-import net.snowyhollows.ogam.rr.feature.combat.system.GradientSystem;
-import net.snowyhollows.ogam.rr.feature.space.LevelGenerator;
-import net.snowyhollows.ogam.rr.feature.space.component.DisplayListSystem;
-import net.snowyhollows.ogam.rr.feature.space.system.FovSystem;
+import net.snowyhollows.ogam.rr.feature.ascii.system.SwingDisplaySystem;
 
 import java.io.IOException;
 
@@ -25,7 +18,7 @@ public class Main {
     @WithFactory
     public Main(
 		    @ByFactory(ScreenFactory.class) Screen screen,
-			AsciiDisplaySystem asciiDisplaySystem,
+			SwingDisplaySystem swingDisplaySystem,
 			GameItself gameItself) {
 
 		try {
@@ -42,7 +35,7 @@ public class Main {
 		        if (command == PlayerCommand.QUIT) {
 			        break main_loop;
 		        }
-		        asciiDisplaySystem.run();
+		        swingDisplaySystem.run();
 	        }
 
 	        screen.stopScreen();

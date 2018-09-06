@@ -21,7 +21,7 @@ public class AsciiRepresentationImpl implements AsciiRepresentation {
 
     @Override
     public Color getBackgroundColor() {
-        return null;
+        return backgroundColor;
     }
 
     @Override

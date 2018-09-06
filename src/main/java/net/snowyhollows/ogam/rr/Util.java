@@ -1,6 +1,8 @@
 package net.snowyhollows.ogam.rr;
 
 import java.util.EnumMap;
+import java.util.HashMap;
+import java.util.Map;
 
 import com.googlecode.lanterna.TextColor;
 import com.googlecode.lanterna.input.KeyStroke;
@@ -8,7 +10,7 @@ import net.snowyhollows.ogam.rr.feature.ascii.component.AsciiRepresentation;
 
 public enum Util {;
 
-	public static final EnumMap<AsciiRepresentation.Color, TextColor> colors = new EnumMap<AsciiRepresentation.Color, TextColor>(AsciiRepresentation.Color.class);
+	public static final HashMap<AsciiRepresentation.Color, TextColor> colors = new HashMap<>();
 	static {
 		colors.put(AsciiRepresentation.Color.CYAN, TextColor.ANSI.CYAN);
 		colors.put(AsciiRepresentation.Color.GREEN, TextColor.ANSI.GREEN);

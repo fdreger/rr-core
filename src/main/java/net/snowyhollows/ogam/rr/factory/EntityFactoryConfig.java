@@ -63,7 +63,7 @@ public class EntityFactoryConfig {
 		bento.register("entity.wall", (BentoFactory) b -> {
 			Entity e = new Entity();
 			e.obstacle = new PotentialObstacleImpl(true);
-			e.asciiRepresentation = new AsciiRepresentationImpl(AsciiRepresentation.Color.WHITE, '#');
+			e.asciiRepresentation = new AsciiRepresentationImpl(AsciiRepresentation.Color.WHITE, AsciiRepresentation.Color.GREEN, '#');
 			e.position = new PositionImpl(engine, e);
 			engine.addEntity(e);
 			return e;

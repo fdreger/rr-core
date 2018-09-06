@@ -23,7 +23,7 @@ public class AttackableImpl implements Attackable, Bumpable, PotentialObstacle {
         if (comparisonResult == Value.ComparisonResult.LOST) {
             int damage = other.basicAttributes.defenseRoll(me).eval();
             me.destructible.inflict(other, damage);
-            System.out.println("inflicted " + damage + " damage");
+            messageLog.info("inflicted " + damage + " damage");
 
         }
     }

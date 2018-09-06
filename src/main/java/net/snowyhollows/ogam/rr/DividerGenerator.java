@@ -51,7 +51,7 @@ public class DividerGenerator {
 				}
 			}
 
-			int whatNow = random.nextInt(5);
+			int whatNow = random.nextInt(2);
 			if (whatNow == 0) {
 				return;
 			} else if (a != null){

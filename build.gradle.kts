@@ -26,6 +26,7 @@ dependencies {
     compile("net.snowyhollows.beach", "beach", "1.0", null, "sources")
     compile("net.snowyhollows.beach", "beach", "1.0")
     compile("net.snowyhollows.bento", "bento2-core", "1.1.2")
+    compile("net.bajobongo", "labyrinth", "0.9")
     compile ("com.google.gwt", "gwt", "2.8.2")
     compile ("com.google.elemental2", "elemental2-core", "1.0.0-RC1")
     compile ("com.google.elemental2", "elemental2-dom", "1.0.0-RC1")
@@ -55,5 +56,4 @@ gwt {
     modules = mutableListOf("RrCore")
     minHeapSize = "2048M";
     maxHeapSize = "2048M";
-
 }

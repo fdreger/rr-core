@@ -7,6 +7,7 @@ public interface Position {
     Coords NOWHERE = Coords.NOWHERE;
 
     boolean move(Direction d);
+    void moveTo(Coords coords);
     void setCoords(Coords coords);
     Coords getCoords();
 }

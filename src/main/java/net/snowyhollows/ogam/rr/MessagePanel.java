@@ -6,7 +6,7 @@ import net.snowyhollows.ogam.rr.core.MessageLog;
 import net.snowyhollows.ogam.rr.feature.ascii.AsciiPanel;
 import net.snowyhollows.ogam.rr.feature.ascii.AsciiWindow;
 import net.snowyhollows.ogam.rr.feature.ascii.DecoratedAsciiWindow;
-import net.snowyhollows.ogam.rr.feature.ascii.component.AsciiRepresentation;
+import net.snowyhollows.ogam.rr.feature.ascii.component.Color;
 
 import java.util.List;
 
@@ -32,7 +32,7 @@ public class MessagePanel {
         myPanel.clear();
         final List<String> msgs = messageLog.getLastNMessages(myPanel.getHeight());
         for (int i = 0; i < msgs.size(); i++) {
-            myPanel.putStr(i + 0, 0, AsciiRepresentation.Color.BLACK, AsciiRepresentation.Color.WHITE, msgs.get(i));
+            myPanel.putStr(i + 0, 0, Color.BLACK, Color.WHITE, msgs.get(i));
         }
     }
 }

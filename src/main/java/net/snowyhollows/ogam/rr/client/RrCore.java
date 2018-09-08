@@ -7,7 +7,7 @@ import net.snowyhollows.ogam.rr.GameItself;
 import net.snowyhollows.ogam.rr.GameItselfFactory;
 import net.snowyhollows.ogam.rr.PlayerCommand;
 import net.snowyhollows.ogam.rr.core.MessageLogFactory;
-import net.snowyhollows.ogam.rr.feature.ascii.component.AsciiRepresentation;
+import net.snowyhollows.ogam.rr.feature.ascii.component.Color;
 
 public class RrCore implements EntryPoint {
     private GameItself gameItself;
@@ -19,7 +19,7 @@ public class RrCore implements EntryPoint {
                 .createRoot();
         bento.register("level.width", COLS);
         bento.register("level.height", ROWS);
-        GwtAsciiPanel gwtAsciiPanel = new GwtAsciiPanel(COLS, ROWS, 10, AsciiRepresentation.Color.BLACK);
+        GwtAsciiPanel gwtAsciiPanel = new GwtAsciiPanel(COLS, ROWS, 10, Color.BLACK);
         gwtAsciiPanel.setKeyboardListener(k -> {
             PlayerCommand command = null;
             switch (k) {

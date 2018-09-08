@@ -8,7 +8,6 @@ import net.snowyhollows.bento2.annotation.WithFactory;
 import net.snowyhollows.ogam.rr.EntityEngine;
 import net.snowyhollows.ogam.rr.ScreenFactory;
 import net.snowyhollows.ogam.rr.Util;
-import net.snowyhollows.ogam.rr.core.Entity;
 import net.snowyhollows.ogam.rr.core.Mappers;
 import net.snowyhollows.ogam.rr.feature.space.Coords;
 import net.snowyhollows.ogam.rr.feature.space.component.DisplayListSystem;
@@ -36,7 +35,7 @@ public class SwingDisplaySystem implements Runnable {
         engine.forEach(Mappers.player, p -> {
             fovFow = p.fovFow;
             if (fovFow != null) {
-                fovFow.forEachVisible(coords -> {
+                fovFow.forEachVisible((coords, light )-> {
                     TextCharacter tc = new TextCharacter(
                             '.',
                             TextColor.ANSI.WHITE,
@@ -54,7 +53,7 @@ public class SwingDisplaySystem implements Runnable {
             Coords coords = entity.position.getCoords();
             if (
                     (fovFow != null) && (
-                            fovFow.isVisible(coords)
+                            fovFow.getVisible(coords) > 0
                                     || (fovFow.isSeen(coords) && entity.obstacle != null && !entity.obstacle.isTemporary())
                     )) {
                 TextCharacter tc = new TextCharacter(

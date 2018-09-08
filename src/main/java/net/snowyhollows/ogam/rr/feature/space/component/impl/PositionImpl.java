@@ -1,9 +1,5 @@
 package net.snowyhollows.ogam.rr.feature.space.component.impl;
 
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Optional;
-
 import net.snowyhollows.ogam.rr.EntityEngine;
 import net.snowyhollows.ogam.rr.core.Entity;
 import net.snowyhollows.ogam.rr.core.Mappers;
@@ -11,7 +7,9 @@ import net.snowyhollows.ogam.rr.feature.space.Coords;
 import net.snowyhollows.ogam.rr.feature.space.Direction;
 import net.snowyhollows.ogam.rr.feature.space.component.Position;
 
-public class PositionImpl implements Position, Serializable {
+import java.util.ArrayList;
+
+public class PositionImpl implements Position {
     private Coords coords = NOWHERE;
 	private final EntityEngine engine;
 	private final Entity me;
@@ -55,8 +53,8 @@ public class PositionImpl implements Position, Serializable {
     }
 
     @Override
-    public void setCoords(Coords coords) {
-        this.coords = coords;
+    public void moveTo(Coords coords) {
+        setCoords(coords);
         if (coords.equals(NOWHERE)) return;
 
 	    engine.forEachEntity(Mappers.position, e -> {
@@ -66,7 +64,12 @@ public class PositionImpl implements Position, Serializable {
 	    });
     }
 
-	@Override
+    @Override
+    public void setCoords(Coords coords) {
+        this.coords = coords;
+    }
+
+    @Override
 	public Coords getCoords() {
 		return coords;
 	}

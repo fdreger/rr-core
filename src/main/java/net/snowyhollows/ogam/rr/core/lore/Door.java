@@ -2,6 +2,7 @@ package net.snowyhollows.ogam.rr.core.lore;
 
 import net.snowyhollows.ogam.rr.core.Entity;
 import net.snowyhollows.ogam.rr.feature.ascii.component.AsciiRepresentation;
+import net.snowyhollows.ogam.rr.feature.ascii.component.Color;
 import net.snowyhollows.ogam.rr.feature.space.component.Bumpable;
 import net.snowyhollows.ogam.rr.feature.space.component.PotentialObstacle;
 

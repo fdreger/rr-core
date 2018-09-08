@@ -1,11 +1,11 @@
 package net.snowyhollows.ogam.rr.feature.ascii.component;
 
 public class AsciiRepresentationImpl implements AsciiRepresentation {
-    private final AsciiRepresentation.Color color;
-    private final AsciiRepresentation.Color backgroundColor;
+    private final Color color;
+    private final Color backgroundColor;
     private final char _char;
 
-    public AsciiRepresentationImpl(AsciiRepresentation.Color color, char _char) {
+    public AsciiRepresentationImpl(Color color, char _char) {
         this(color, Color.BLACK, _char);
     }
 
@@ -15,7 +15,7 @@ public class AsciiRepresentationImpl implements AsciiRepresentation {
         this._char = _char;
     }
 
-    public AsciiRepresentation.Color getColor() {
+    public Color getColor() {
         return color;
     }
 

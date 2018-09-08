@@ -1,12 +1,12 @@
 package net.snowyhollows.ogam.rr.feature.ascii;
 
-import net.snowyhollows.ogam.rr.feature.ascii.component.AsciiRepresentation;
+import net.snowyhollows.ogam.rr.feature.ascii.component.Color;
 
 public class AsciiWindow implements AsciiPanel {
     protected final AsciiPanel parentPanel;
 
-    private AsciiRepresentation.Color paper = AsciiRepresentation.Color.BLACK;
-    private AsciiRepresentation.Color ink = AsciiRepresentation.Color.WHITE;
+    private Color paper = Color.BLACK;
+    private Color ink = Color.WHITE;
     private int width;
     private int height;
     private int x;
@@ -66,12 +66,12 @@ public class AsciiWindow implements AsciiPanel {
     }
 
     @Override
-    public void setDefaultInk(AsciiRepresentation.Color ink) {
+    public void setDefaultInk(Color ink) {
         this.ink = ink;
     }
 
     @Override
-    public void setDefaultPaper(AsciiRepresentation.Color paper) {
+    public void setDefaultPaper(Color paper) {
         this.paper = paper;
     }
 
@@ -81,7 +81,7 @@ public class AsciiWindow implements AsciiPanel {
     }
 
     @Override
-    public void putChar(int row, int col, char c, AsciiRepresentation.Color ink, AsciiRepresentation.Color paper) {
+    public void putChar(int row, int col, char c, Color ink, Color paper) {
         if (!isValid(row, col)) {
             return;
         }

@@ -2,6 +2,7 @@
         "http://gwtproject.org/doctype/2.8.0/gwt-module.dtd">
 <module>
 
+    <inherits name="Labyrinth" />
     <inherits name="com.google.gwt.core.Core"/>
     <inherits name='elemental2.core.Core'/>
     <inherits name='elemental2.dom.Dom'/>

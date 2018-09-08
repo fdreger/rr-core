@@ -3,7 +3,7 @@ package net.snowyhollows.ogam.rr.client;
 import elemental2.dom.*;
 import elemental2.promise.Promise;
 import net.snowyhollows.ogam.rr.feature.ascii.AsciiPanel;
-import net.snowyhollows.ogam.rr.feature.ascii.component.AsciiRepresentation;
+import net.snowyhollows.ogam.rr.feature.ascii.component.Color;
 
 import java.util.function.Consumer;
 
@@ -11,7 +11,7 @@ public class GwtAsciiPanel implements AsciiPanel {
     private final int cols;
     private final int rows;
     private final int size;
-    private AsciiRepresentation.Color backgroundColor;
+    private Color backgroundColor;
     private HTMLImageElement font16x16;
     private HTMLCanvasElement main;
     private HTMLCanvasElement background;
@@ -23,8 +23,8 @@ public class GwtAsciiPanel implements AsciiPanel {
     private Promise initiated;
     private Consumer<String> keyboardListener;
 
-    private AsciiRepresentation.Color ink;
-    private AsciiRepresentation.Color paper;
+    private Color ink;
+    private Color paper;
 
     public Promise getInitiated() {
         return initiated;
@@ -34,7 +34,7 @@ public class GwtAsciiPanel implements AsciiPanel {
         this.keyboardListener = keyboardListener;
     }
 
-    public GwtAsciiPanel(int cols, int rows, int size, AsciiRepresentation.Color backgroundColor) {
+    public GwtAsciiPanel(int cols, int rows, int size, Color backgroundColor) {
         this.cols = cols;
         this.rows = rows;
         this.size = size;
@@ -75,17 +75,17 @@ public class GwtAsciiPanel implements AsciiPanel {
 
     @Override
     public void clear(int row, int col, int width, int height) {
-        mainCtx.fillStyle = CanvasRenderingContext2D.FillStyleUnionType.of(backgroundColor.name());
+        mainCtx.fillStyle = CanvasRenderingContext2D.FillStyleUnionType.of('#' + backgroundColor.toString());
         mainCtx.fillRect(col * size, row * size, width * size, height * size);
     }
 
     @Override
-    public void setDefaultInk(AsciiRepresentation.Color ink) {
+    public void setDefaultInk(Color ink) {
         this.ink = ink;
     }
 
     @Override
-    public void setDefaultPaper(AsciiRepresentation.Color paper) {
+    public void setDefaultPaper(Color paper) {
         this.paper = paper;
     }
 
@@ -96,14 +96,14 @@ public class GwtAsciiPanel implements AsciiPanel {
     }
 
     @Override
-    public void putChar(int row, int col, char c, AsciiRepresentation.Color backgroundColor, AsciiRepresentation.Color foregroundColor) {
+    public void putChar(int row, int col, char c, Color backgroundColor, Color foregroundColor) {
         int x = (short)c % 16;
         int y = (short)c / 16;
 
         foregroundCtx.globalCompositeOperation = "source-over";
-        foregroundCtx.fillStyle = CanvasRenderingContext2D.FillStyleUnionType.of(foregroundColor.name());
+        foregroundCtx.fillStyle = CanvasRenderingContext2D.FillStyleUnionType.of('#' + foregroundColor.toString());
         foregroundCtx.fillRect(0, 0, size, size);
-        backgroundCtx.fillStyle = CanvasRenderingContext2D.FillStyleUnionType.of(backgroundColor.name());
+        backgroundCtx.fillStyle = CanvasRenderingContext2D.FillStyleUnionType.of('#' + backgroundColor.toString());
         backgroundCtx.fillRect(0, 0, size, size);
 
         foregroundCtx.globalCompositeOperation = "destination-in";

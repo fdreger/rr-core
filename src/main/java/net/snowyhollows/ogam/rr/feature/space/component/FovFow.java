@@ -3,11 +3,12 @@ package net.snowyhollows.ogam.rr.feature.space.component;
 import net.snowyhollows.ogam.rr.feature.space.Coords;
 import net.snowyhollows.ogam.rr.util.ObjectArray2D;
 
+import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 
 public class FovFow {
 
-    public boolean isVisible(Coords coords) {
+    public float getVisible(Coords coords) {
         return data.get(coords.row, coords.col).visible;
     }
 
@@ -20,17 +21,13 @@ public class FovFow {
     }
 
     private static class SquareData {
-        public boolean visible;
+        public float visible;
         public boolean seen;
         public float transparency;
         public Coords coords;
 
         public SquareData(Coords coords) {
             this.coords = coords;
-        }
-
-        public void visible() {
-            visible = seen = true;
         }
     }
 
@@ -39,21 +36,21 @@ public class FovFow {
             new SquareData(Coords.NOWHERE), (row, col, x) -> new SquareData(Coords.of(row, col))
     );
 
-    public void forEachVisible(Consumer<Coords> consumer) {
+    public void forEachVisible(BiConsumer<Coords, Float> consumer) {
         data.visit((row, col, t) -> {
-            if (t.visible) {
-                consumer.accept(t.coords);
+            if (t.visible > 0) {
+                consumer.accept(t.coords, t.visible);
             }
         });
     }
 
     public void createFrom(int row, int col, int radius, float light, Transparency transparency) {
         data.visit((q, w, t) -> {
-            t.visible = false;
+            t.visible = 0;
             t.transparency = transparency.transparency(t.coords);
         });
 
-        data.get(row, col).visible = true;
+        data.get(row, col).visible = 1;
         data.get(row, col).seen = true;
 
         for (int dr = -radius; dr <= radius; dr++) {
@@ -65,7 +62,7 @@ public class FovFow {
 
     public void clearSeen() {
         data.visit((q, w, t) -> {
-            t.visible = false;
+            t.visible = 0;
             t.seen = false;
         });
     }
@@ -93,7 +90,7 @@ public class FovFow {
 
             SquareData squareData = data.get(Math.round(row), Math.round(col));
             squareData.seen = true;
-            squareData.visible = true;
+            squareData.visible = light;
             light *= squareData.transparency;
 
             if (light < 0.1f) {

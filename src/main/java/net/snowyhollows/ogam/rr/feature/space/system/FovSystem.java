@@ -27,7 +27,7 @@ public class FovSystem implements Runnable {
                         || !entity.obstacle.isTemporary())) {
                     return 0;
                 }
-                return 1;
+                return 0.82f;
             });
         });
 

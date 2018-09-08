@@ -11,8 +11,8 @@ import net.snowyhollows.ogam.rr.core.Entity;
 import net.snowyhollows.ogam.rr.core.MessageLog;
 import net.snowyhollows.ogam.rr.core.lore.Door;
 import net.snowyhollows.ogam.rr.core.lore.Monster;
-import net.snowyhollows.ogam.rr.feature.ascii.component.AsciiRepresentation;
 import net.snowyhollows.ogam.rr.feature.ascii.component.AsciiRepresentationImpl;
+import net.snowyhollows.ogam.rr.feature.ascii.component.Color;
 import net.snowyhollows.ogam.rr.feature.combat.component.impl.AttackableImpl;
 import net.snowyhollows.ogam.rr.feature.combat.component.impl.DestructibleImpl;
 import net.snowyhollows.ogam.rr.feature.combat.component.impl.GradientObserverImpl;
@@ -36,7 +36,7 @@ public class EntityFactoryConfig {
 			e.bumpable = attackable;
 			e.position = new PositionImpl(engine, e);
             e.destructible = new DestructibleImpl(20);
-			e.asciiRepresentation = new AsciiRepresentationImpl(AsciiRepresentation.Color.RED, '@');
+			e.asciiRepresentation = new AsciiRepresentationImpl(Color.RED, '@');
 			e.gradient = new Gradient();
 			engine.addEntity(e);
 			return e;
@@ -55,7 +55,7 @@ public class EntityFactoryConfig {
             e.bumpable = attackable;
 			e.destructible = new DestructibleImpl(10);
 			e.position = new PositionImpl(engine, e);
-			e.asciiRepresentation = new AsciiRepresentationImpl(AsciiRepresentation.Color.YELLOW, 'O');
+			e.asciiRepresentation = new AsciiRepresentationImpl(Color.YELLOW, 'O');
 			engine.addEntity(e);
 			return e;
 		});
@@ -63,7 +63,7 @@ public class EntityFactoryConfig {
 		bento.register("entity.wall", (BentoFactory) b -> {
 			Entity e = new Entity();
 			e.obstacle = new PotentialObstacleImpl(true);
-			e.asciiRepresentation = new AsciiRepresentationImpl(AsciiRepresentation.Color.WHITE, AsciiRepresentation.Color.GREEN, '#');
+			e.asciiRepresentation = new AsciiRepresentationImpl(Color.WHITE, Color.GREEN, '#');
 			e.position = new PositionImpl(engine, e);
 			engine.addEntity(e);
 			return e;

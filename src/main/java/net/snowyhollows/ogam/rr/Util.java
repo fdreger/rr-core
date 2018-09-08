@@ -1,22 +1,20 @@
 package net.snowyhollows.ogam.rr;
 
-import java.util.EnumMap;
 import java.util.HashMap;
-import java.util.Map;
 
 import com.googlecode.lanterna.TextColor;
 import com.googlecode.lanterna.input.KeyStroke;
-import net.snowyhollows.ogam.rr.feature.ascii.component.AsciiRepresentation;
+import net.snowyhollows.ogam.rr.feature.ascii.component.Color;
 
 public enum Util {;
 
-	public static final HashMap<AsciiRepresentation.Color, TextColor> colors = new HashMap<>();
+	public static final HashMap<Color, TextColor> colors = new HashMap<>();
 	static {
-		colors.put(AsciiRepresentation.Color.CYAN, TextColor.ANSI.CYAN);
-		colors.put(AsciiRepresentation.Color.GREEN, TextColor.ANSI.GREEN);
-		colors.put(AsciiRepresentation.Color.WHITE, TextColor.ANSI.WHITE);
-		colors.put(AsciiRepresentation.Color.RED, TextColor.ANSI.RED);
-		colors.put(AsciiRepresentation.Color.YELLOW, TextColor.ANSI.YELLOW);
+		colors.put(Color.CYAN, TextColor.ANSI.CYAN);
+		colors.put(Color.GREEN, TextColor.ANSI.GREEN);
+		colors.put(Color.WHITE, TextColor.ANSI.WHITE);
+		colors.put(Color.RED, TextColor.ANSI.RED);
+		colors.put(Color.YELLOW, TextColor.ANSI.YELLOW);
 	}
 
 	public static PlayerCommand commandFromKeyStroke(KeyStroke keyStroke) {

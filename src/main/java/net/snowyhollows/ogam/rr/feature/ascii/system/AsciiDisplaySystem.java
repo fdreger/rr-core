@@ -5,7 +5,7 @@ import net.snowyhollows.bento2.annotation.WithFactory;
 import net.snowyhollows.ogam.rr.EntityEngine;
 import net.snowyhollows.ogam.rr.feature.ascii.AsciiPanel;
 import net.snowyhollows.ogam.rr.core.Mappers;
-import net.snowyhollows.ogam.rr.feature.ascii.component.AsciiRepresentation;
+import net.snowyhollows.ogam.rr.feature.ascii.component.Color;
 import net.snowyhollows.ogam.rr.feature.space.Coords;
 import net.snowyhollows.ogam.rr.feature.space.component.DisplayListSystem;
 import net.snowyhollows.ogam.rr.feature.space.component.FovFow;
@@ -28,11 +28,16 @@ public class AsciiDisplaySystem {
 
         asciiPanel.clear();
 
+
+        Color g = Color.GRAY.cpy();
+        Color shaded = new Color();
         engine.forEach(Mappers.player, p -> {
             fovFow = p.fovFow;
             if (fovFow != null) {
-                fovFow.forEachVisible(coords -> {
-                    asciiPanel.putChar(coords.row, coords.col, ' ', AsciiRepresentation.Color.GREY, AsciiRepresentation.Color.BLACK);
+                fovFow.forEachVisible((coords, light) -> {
+                    shaded.set(g);
+                    shaded.mul(light);
+                    asciiPanel.putChar(coords.row, coords.col, ' ', shaded, Color.BLACK);
                 });
             }
         });
@@ -45,7 +50,7 @@ public class AsciiDisplaySystem {
             Coords coords = entity.position.getCoords();
             if (
                     (fovFow != null) && (
-                            fovFow.isVisible(coords)
+                            fovFow.getVisible(coords) > 0
                                     || (fovFow.isSeen(coords) && entity.obstacle != null && !entity.obstacle.isTemporary())
                     )) {
                 asciiPanel.putChar(entity.position.getCoords().row , entity.position.getCoords().col, entity.asciiRepresentation.getChar(), entity.asciiRepresentation.getBackgroundColor(), entity.asciiRepresentation.getColor());
